@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #msg {background-color:#ffaaaa;
+    margin:0px;
+    position:absolute;
+    width:100px; left:50px;
+    cursor:pointer}
+  </style>
+  <script>
+    function doDown(event){
+      if (event.buttons==1){
+        event.target.style.backgroundColor = "#ffcccc"
+      }
+      if (event.buttons==2){
+        event.target.style.backgroundColor = "#ffdddd"
+      }
+    }
+    function doUp(event){
+      event.target.style.backgroundColor = "#ffaaaa"
+    }
+    function doMove(event){
+      if ( event.target.id=="msg"){
+        if (event.buttons == 1){
+          var w = event.clientX;
+          var h = event.clientY;
+          event.target.style.left = (w -50 )+ "px";
+          event.target.style.top = (h -50)+ "px";
+        }
+        else if  (event.buttons == 2){
+          var w = event.clientX;
+          var h = event.clientY;
+          event.target.style.left = (w -50 )+ "px";
+          event.target.style.top = (h -50)+ "px";
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1 id="title">hello!</h1>
+  <p id="msg" onmousedown="doDown(event);"
+    onmouseup="doUp(event);"
+    onmousemove="doMove(event);">マウスでドラッグしてみよう</p>
+</body>
+</html>
