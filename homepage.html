@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <style>
+    .num {color:red}
+    .content {background-color:#e7b7da; padding:5px}
+  </style>
+  <script>
+    function writelist(title,url,count){
+      document.write('<h2>' + '<span class=num>' + count + "." +
+      "<span style=color:black;>" + title + "</span>" + "</h2>"
+      +"<a href=" + url + ">" +"<span class=content>"+ url +"</span>" + "</a>")
+    }
+  </script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h1><li>url集</li></h1>
+  <script>
+    var count1 = 1
+    list = {"campasmate" : "https://ku-portal.kyushu-u.ac.jp/campusweb/top.do",
+    "moodle":"https://moodle.s.kyushu-u.ac.jp/login/index.php",
+    "newspicks" :"https://newspicks.com/",
+  "rarejob":"https://www.rarejob.com/account/login/"}
+    for (title in list){
+      writelist(title,list[title],count1)
+      ++count1}
+  </script>
+  <br><br><br><br>
+  <h1><li>タイピング練習</li></h1>
+  <script>
+  var count2 = 1
+    list = {"寿司打":"http://typingx0.net/sushida/play.html?soundless"}
+
+    for (title in list){
+      writelist(title,list[title],count2)
+      ++count2}
+  </script>
+  <br><br><br><br>
+  <h1><li>したいこと</li></h1>
+  <li>いろいろなサイトのprefillした状態のurlを用意してより簡単にアクセスできるようにする</li>
+  <li>最終的には自前のexcelデータを読み取ってウェブに表示できるようにする。</li>
+</body>
+</html>
