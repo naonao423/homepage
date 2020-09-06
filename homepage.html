@@ -9,6 +9,10 @@ H<!doctype html>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="utils.js"></script>
 
     <nav class="navbar navbar-expand-md navbar-light bg-dark fixed-top">
     <a class="navbar-brand text-white" href="#">Homename</a>
@@ -33,80 +37,6 @@ H<!doctype html>
       </div>
     </nav>
     <title id="top">Hello, world!</title>
-    <script>
-      var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-      var config = {
-        type: 'line',
-        data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-          datasets: [{
-            label: 'My First dataset',
-            backgroundColor: window.chartColors.red,
-            borderColor: window.chartColors.red,
-            data: [
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor()
-            ],
-            fill: false,
-          }, {
-            label: 'My Second dataset',
-            fill: false,
-            backgroundColor: window.chartColors.blue,
-            borderColor: window.chartColors.blue,
-            data: [
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor()
-            ],
-          }]
-        },
-        options: {
-          responsive: true,
-          title: {
-            display: true,
-            text: 'Chart.js Line Chart'
-          },
-          tooltips: {
-            mode: 'index',
-            intersect: false,
-          },
-          hover: {
-            mode: 'nearest',
-            intersect: true
-          },
-          scales: {
-            xAxes: [{
-              display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Month'
-              }
-            }],
-            yAxes: [{
-              display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Value'
-              }
-            }]
-          }
-        }
-      };
-
-      window.onload = function() {
-        var ctx = document.getElementById('canvas').getContext('2d');
-        window.myLine = new Chart(ctx, config);
-      };
-    </script>
   </head>
   <body>
     <div class="container-fluid">
@@ -132,6 +62,12 @@ H<!doctype html>
                   test
                 </a>
               </li>
+              <li>
+                <input type="date" id="input_data_start" value="2020-08-20">
+                <br>
+                <input type="date" id="input_data_stop" value="2020-09-06">
+                <br>
+              </li>
             </ul>
           </div>
         </nav>
@@ -141,10 +77,12 @@ H<!doctype html>
     <div class="container" id="top">
       <div class="row">
         <div  class="col-12" id="graphall">
-          <canvas id="canvas"></canvas>
+          <div class="wrapper" style="max-width: 512px; margin: auto">
+            <canvas id="chart-0"></canvas>
+          </div>
         </div>
         <div class="col-12 col-md-8 t">
-          <p>test</p>
+          <p id="summary">test</p>
         </div>
         <div class="col-12 col-md-4 t">
 
@@ -153,11 +91,125 @@ H<!doctype html>
     </div>
   </main>
 
+
+  <script>
+  var presets = window.chartColors;
+  var utils = Samples.utils;
+  var datas = [10,10,10,10,10,10,10,10,10,10]
+  var inputs = {
+    min: 8,
+    max: 16,
+    count: 10,
+    decimals: 2,
+    continuity: 1
+  };
+
+  utils.srand(42);
+
+  var radardata = {
+    labels: ["Nap","Programing","English","Study","Meditation","Stretch","英単語","Reading"],
+    datasets: [{
+      backgroundColor:utils.transparentize(presets.red),
+      borderColor: presets.red,
+      data: datas,
+      label: '一週間のデータ'
+    }]
+  };
+
+  var options = {
+    maintainAspectRatio: true,
+    spanGaps: true,
+    aspectRatio : 1,
+    elements: {
+      line: {
+        tension: 0.1
+      }
+    },
+    plugins: {
+      filler: {
+        propagate: false
+      },
+      'samples-filler-analyser': {
+        target: 'chart-analyser'
+      }
+    }
+  };
+
+  var ctx = document.getElementById('chart-0'); // node
+  var ctx = document.getElementById('chart-0').getContext('2d'); // 2d context
+  var ctx = $('#chart-0'); // jQuery instance
+  var ctx = 'chart-0'; // element id
+
+  var chart = new Chart(ctx, {
+    type: 'radar',
+    data: radardata,
+    options: options
+  });
+
+  document.getElementById('input_data_start').addEventListener('change',
+  function(){
+  var start_date = "2020-07-01"
+  var stop_date = "2020-08-09"
+  var start =document.querySelector('#input_data_start')
+  var start_date = start.value
+  var stop =document.querySelector('#input_data_stop')
+  var stop_date = stop.value
+  var urls = "http://127.0.0.1:8000/events/summary/" + start_date + "/" +stop_date
+  var dic = ""
+  var data_value = []
+  $.ajax({
+    'url':urls,
+    'type':"GET",
+  }).done(function(data){
+    console.log(Object.keys(data))
+    sublist = Object.keys(data)
+    sublist.forEach(function(sub){
+      console.log(sub);
+      console.log(data[sub]);
+      time = data[sub].hour * 60 + data[sub].minute + data[sub].second / 60;
+      data_value.push(time);
+    })
+    console.log(radardata.datasets[0].data);
+    radardata.datasets[0].data = data_value;
+    chart.update();
+    document.getElementById("summary").innerHTML = "ロード完了"
+    }
+  ).fail(
+    document.getElementById("summary").innerHTML = "ロード中"
+  )})
+
+  var start_date = "2020-07-01"
+  var stop_date = "2020-08-09"
+  var urls = "http://127.0.0.1:8000/events/summary/" + start_date + "/" +stop_date
+  var dic = ""
+  var data_value = []
+  $.ajax({
+    'url':urls,
+    'type':"GET",
+  }).done(function(data){
+    console.log(Object.keys(data))
+    sublist = Object.keys(data)
+    sublist.forEach(function(sub){
+      console.log(sub);
+      console.log(data[sub]);
+      time = data[sub].hour * 60 + data[sub].minute + data[sub].second / 60;
+      data_value.push(time);
+    })
+    console.log(radardata.datasets[0].data);
+    radardata.datasets[0].data = data_value;
+    chart.update();
+    document.getElementById("summary").innerHTML = "ロード完了"
+    }
+  ).fail(
+    document.getElementById("summary").innerHTML = "ロード中"
+  )
+
+
+
+
+
+  </script>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="./utils.js"></script>
   </body>
 </html>
