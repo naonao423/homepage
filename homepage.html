@@ -1,107 +1,163 @@
-<!DOCTYPE html>
+H<!doctype html>
 <html lang="ja">
-  <style>
-    .num {color:red}
-    .content {background-color:#e7b7da; padding:5px}
-  </style>
-  <script>
-    function writelist(title,url,count){
-      document.write('<h2>' + '<span class=num>' + count + "." +
-      "<span style=color:black;>" + title + "</span>" + "</h2>"
-      +"<a href=" + url + ">" +"<span class=content>"+ url +"</span>" + "</a>")
-    }
-  </script>
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
-  <!-- default settings -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <!-- title setting -->
-  <title>Mypage</title>
-  <!-- navigation bar -->
- <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-top">
-  <a class="navbar-brand text-white" href="#">My Page</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="homepage.html">Features</a>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-</head>
-<body>
-  <br>
-  <br>
-  <br>
-  <!-- column grid -->
-<div class="container">
-  <div class="row">
-    <div class="col-md">
-      One of three columns
-    </div>
-    <div class="col-sm">
-      One of three columns
-    </div>
-    <div class="col-sm">
-      One of three columns
-    </div>
-  </div>
-</div>
+  <head>
+    <h5><br></h5>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!--
-  <h1><li>url集</li></h1>
-  <script>
-    var count1 = 1
-    list = {"campasmate" : "https://ku-portal.kyushu-u.ac.jp/campusweb/top.do",
-    "moodle":"https://moodle.s.kyushu-u.ac.jp/login/index.php",
-    "newspicks" :"https://newspicks.com/",
-    "rarejob":"https://www.rarejob.com/account/login/",
-    "マイナビ":"https://job.mynavi.jp/2022/",
-    "こぐナビ":"https://www.cognavi.jp/new_grad/mypage/",
-    "feedly":"https://feedly.com/i/my"}
-    for (title in list){
-      writelist(title,list[title],count1)
-      ++count1}
-  </script>
-  <br><br><br><br>
-  <h1><li>タイピング練習</li></h1>
-  <script>
-  var count2 = 1
-    list = {"寿司打":"http://typingx0.net/sushida/play.html?soundless"}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 
-    for (title in list){
-      writelist(title,list[title],count2)
-      ++count2}
-  </script>
-  <br><br><br><br>
-  <h1><li>したいこと</li></h1>
-  <li>いろいろなサイトのprefillした状態のurlを用意してより簡単にアクセスできるようにする</li>
-  <li>最終的には自前のexcelデータを読み取ってウェブに表示できるようにする。</li>
-   -->
+    <nav class="navbar navbar-expand-md navbar-light bg-dark fixed-top">
+    <a class="navbar-brand text-white" href="#">Homename</a>
+    <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="homepage1.html">Home<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="programing.html">Programming</a>
+          <li class="nav-item">
+            <a class="nav-link" href="Urls.html">Urls</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <title id="top">Hello, world!</title>
+    <script>
+      var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      var config = {
+        type: 'line',
+        data: {
+          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          datasets: [{
+            label: 'My First dataset',
+            backgroundColor: window.chartColors.red,
+            borderColor: window.chartColors.red,
+            data: [
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor()
+            ],
+            fill: false,
+          }, {
+            label: 'My Second dataset',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: [
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor()
+            ],
+          }]
+        },
+        options: {
+          responsive: true,
+          title: {
+            display: true,
+            text: 'Chart.js Line Chart'
+          },
+          tooltips: {
+            mode: 'index',
+            intersect: false,
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Month'
+              }
+            }],
+            yAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Value'
+              }
+            }]
+          }
+        }
+      };
 
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <!-- navigation bar  -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-</body>
+      window.onload = function() {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        window.myLine = new Chart(ctx, config);
+      };
+    </script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <nav id="sidebarmenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+          <div class="sidebar-sticky px-2">
+            <ul class="nav flex-column px-2">
+              <li>
+                <a href="#top" class="nav-link active">
+                  <img src="img/icons/svg/home.svg" alt="" height=20>
+                  Top
+                </a>
+              </li>
+              <li>
+                <a href="" class="nav-link active">
+                  <img src="img/icons/svg/laptop.svg" alt="" height=20>
+                  Data
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link active">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                  test
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  <main role="main" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mt-5">
+    <div class="container" id="top">
+      <div class="row">
+        <div  class="col-12" id="graphall">
+          <canvas id="canvas"></canvas>
+        </div>
+        <div class="col-12 col-md-8 t">
+          <p>test</p>
+        </div>
+        <div class="col-12 col-md-4 t">
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="./utils.js"></script>
+  </body>
 </html>
