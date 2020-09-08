@@ -96,6 +96,9 @@ H<!doctype html>
 
 
   <script>
+  var urls = "https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/events/summary/"
+  var localurls = "http://127.0.0.1:8000/events"
+
   var presets = window.chartColors;
   var utils = Samples.utils;
   var datas = [10,10,10,10,10,10,10,10,10,10]
@@ -110,7 +113,7 @@ H<!doctype html>
   utils.srand(42);
 
   var radardata = {
-    labels: ["Nap","Programing","English","Study","Meditation","Stretch","英単語","Reading"],
+    labels:[],
     datasets: [{
       backgroundColor:utils.transparentize(presets.red),
       borderColor: presets.red,
@@ -148,11 +151,25 @@ H<!doctype html>
     data: radardata,
     options: options
   });
+  $.ajax({
+    'url':localurls + "/setsub" ,
+    'type':"get",
+
+  }).done(function(data){
+    radardata.labels = data
+
+    chart.update()
+  })
+
 
   $.ajax({
-    'url':"https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/events/reload" ,
+    'url': localurls +"/reload" ,
     'type':"POST",
-  })
+  }).done(
+    chart.update()
+  )
+
+
 
   document.getElementById('input_data_start').addEventListener('change',
   function(){
@@ -162,11 +179,11 @@ H<!doctype html>
   var start_date = start.value
   var stop =document.querySelector('#input_data_stop')
   var stop_date = stop.value
-  var urls = "https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/events/summary/" + start_date + "/" +stop_date
+  var urls = localurl + start_date + "/" +stop_date
   var dic = ""
   var data_value = []
   $.ajax({
-    'url':urls,
+    'url':urls + "/summary",
     'type':"GET",
   }).done(function(data){
     console.log(Object.keys(data))
