@@ -127,6 +127,161 @@ H<!doctype html>
 
   <script>
     var localurls = "https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/events"
+
+    document.getElementById('input_data_stop').addEventListener('change',
+    function(){
+    var start =document.querySelector('#input_data_start')
+    var start_date = start.value
+    var stop =document.querySelector('#input_data_stop')
+    var stop_date = stop.value
+    var urls = localurls + "/datescale/" + start_date + "/" +stop_date
+    var dic = ""
+    var data_value = []
+    var date_list =[]
+    var data_list =[]
+    var data_list_all =[]
+    $.ajax({
+      'url':urls,
+      'type':"GET",
+    }).done(function(data){
+      datetime1 = Object.keys(data)
+      datetime1.forEach((item, i) => {
+      date_part =  moment(item)
+      date_list.push(date_part)
+      config1.data.labels = date_list
+      config2.data.labels = date_list
+      config3.data.labels = date_list
+      config4.data.labels = date_list
+      config5.data.labels = date_list
+      config6.data.labels = date_list
+      config7.data.labels = date_list
+      config8.data.labels = date_list
+      if (i == 1){
+        one_file = Object.keys(data[item])
+        config_len = one_file.length
+        }
+      });
+      one_file.forEach((sub,i) =>{
+        // console.log(sub)
+      datetime1.forEach((item, i) => {
+      subdata = data[item]
+      subdata = subdata[sub].minute
+
+      data_list.push(subdata)
+      // console.log(data_list)
+              })
+              data_list_all.push(data_list)
+              data_list = []
+      });
+      console.log(data_list_all)
+      config1.data.datasets[0].label = one_file[0]
+      config1.data.datasets[0].data= data_list_all[0]
+      config2.data.datasets[0].label = one_file[1]
+      config2.data.datasets[0].data= data_list_all[1]
+      config3.data.datasets[0].label = one_file[2]
+      config3.data.datasets[0].data= data_list_all[2]
+      config4.data.datasets[0].label = one_file[3]
+      config4.data.datasets[0].data= data_list_all[3]
+      config5.data.datasets[0].label = one_file[4]
+      config5.data.datasets[0].data= data_list_all[4]
+      config6.data.datasets[0].label = one_file[5]
+      config6.data.datasets[0].data= data_list_all[5]
+      config7.data.datasets[0].label = one_file[6]
+      config7.data.datasets[0].data= data_list_all[6]
+      config8.data.datasets[0].label = one_file[7]
+      config8.data.datasets[0].data= data_list_all[7]
+      // document.getElementById("summary").innerHTML = data_list_all[1]
+      window.myLine1.update();
+      window.myLine2.update();
+      window.myLine3.update();
+      window.myLine4.update();
+      window.myLine5.update();
+      window.myLine6.update();
+      window.myLine7.update();
+      window.myLine8.update();
+    }
+    ).fail(
+      // document.getElementById("summary").innerHTML = "ロード中"
+    )})
+
+    var localurls = "https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/events"
+    // var localurls = "http://127.0.0.1:8000/events"
+
+    document.getElementById('input_data_stop').addEventListener('change',
+    function(){
+    var start =document.querySelector('#input_data_start')
+    var start_date = start.value
+    var stop =document.querySelector('#input_data_stop')
+    var stop_date = stop.value
+    var urls = localurls + "/datescaleaverage/" + start_date + "/" +stop_date
+    var dic = ""
+    var data_value = []
+    var date_list =[]
+    var data_list =[]
+    var data_list_all =[]
+    $.ajax({
+      'url':urls,
+      'type':"GET",
+    }).done(function(data){
+      datetime1 = Object.keys(data)
+      datetime1.forEach((item, i) => {
+      date_part =  moment(item)
+      date_list.push(date_part)
+      config1.data.labels = date_list
+      config2.data.labels = date_list
+      config3.data.labels = date_list
+      config4.data.labels = date_list
+      config5.data.labels = date_list
+      config6.data.labels = date_list
+      config7.data.labels = date_list
+      config8.data.labels = date_list
+      if (i == 1){
+        one_file = Object.keys(data[item])
+        config_len = one_file.length
+        }
+      });
+      one_file.forEach((sub,i) =>{
+        // console.log(sub)
+      datetime1.forEach((item, i) => {
+      subdata = data[item]
+      subdata = subdata[sub].minute
+
+      data_list.push(subdata)
+      // console.log(data_list)
+              })
+              data_list_all.push(data_list)
+              data_list = []
+      });
+      console.log(data_list_all)
+      config1.data.datasets[1].label =  "average"
+      config1.data.datasets[1].data= data_list_alll[0]
+      config2.data.datasets[1].label = "average"
+      config2.data.datasets[1].data= data_list_alll[1]
+      config3.data.datasets[1].label = "average"
+      config3.data.datasets[1].data= data_list_alll[2]
+      config4.data.datasets[1].label = "average"
+      config4.data.datasets[1].data= data_list_alll[3]
+      config5.data.datasets[1].label = "average"
+      config5.data.datasets[1].data= data_list_alll[4]
+      config6.data.datasets[1].label = "average"
+      config6.data.datasets[1].data= data_list_alll[5]
+      config7.data.datasets[1].label = "average"
+      config7.data.datasets[1].data= data_list_alll[6]
+      config8.data.datasets[1].label = "average"
+      config8.data.datasets[1].data= data_list_alll[7]
+      // document.getElementById("summary").innerHTML = data_list_all[1]
+      window.myLine1.update();
+      window.myLine2.update();
+      window.myLine3.update();
+      window.myLine4.update();
+      window.myLine5.update();
+      window.myLine6.update();
+      window.myLine7.update();
+      window.myLine8.update();
+    }
+    ).fail(
+      // document.getElementById("summary").innerHTML = "ロード中"
+    )})
     // var localurls = "http://127.0.0.1:8000/events"
 
     document.getElementById('input_data_start').addEventListener('change',
@@ -254,22 +409,22 @@ H<!doctype html>
               data_list = []
       });
       console.log(data_list_all)
-      config1.data.datasets[1].label = one_file[0]
-      config1.data.datasets[1].data= data_list_all[0]
-      config2.data.datasets[1].label = one_file[1]
-      config2.data.datasets[1].data= data_list_all[1]
-      config3.data.datasets[1].label = one_file[2]
-      config3.data.datasets[1].data= data_list_all[2]
-      config4.data.datasets[1].label = one_file[3]
-      config4.data.datasets[1].data= data_list_all[3]
-      config5.data.datasets[1].label = one_file[4]
-      config5.data.datasets[1].data= data_list_all[4]
-      config6.data.datasets[1].label = one_file[5]
-      config6.data.datasets[1].data= data_list_all[5]
-      config7.data.datasets[1].label = one_file[6]
-      config7.data.datasets[1].data= data_list_all[6]
-      config8.data.datasets[1].label = one_file[7]
-      config8.data.datasets[1].data= data_list_all[7]
+      config1.data.datasets[1].label =  "average"
+      config1.data.datasets[1].data= data_list_alll[0]
+      config2.data.datasets[1].label = "average"
+      config2.data.datasets[1].data= data_list_alll[1]
+      config3.data.datasets[1].label = "average"
+      config3.data.datasets[1].data= data_list_alll[2]
+      config4.data.datasets[1].label = "average"
+      config4.data.datasets[1].data= data_list_alll[3]
+      config5.data.datasets[1].label = "average"
+      config5.data.datasets[1].data= data_list_alll[4]
+      config6.data.datasets[1].label = "average"
+      config6.data.datasets[1].data= data_list_alll[5]
+      config7.data.datasets[1].label = "average"
+      config7.data.datasets[1].data= data_list_alll[6]
+      config8.data.datasets[1].label = "average"
+      config8.data.datasets[1].data= data_list_alll[7]
       // document.getElementById("summary").innerHTML = data_list_all[1]
       window.myLine1.update();
       window.myLine2.update();
@@ -286,8 +441,12 @@ H<!doctype html>
 
 
     var timeFormat = 'MM/DD/YYYY';
-    var start_date = "2020-09-01"
-    var stop_date = "2020-09-09"
+    var today = moment().format('YYYY-MM-DD');
+    var beforeaweek = moment().add(-7,"d").format("YYYY-MM-DD");
+    var start_date = moment().add(-7,"d").format("YYYY-MM-DD");
+    var stop_date = moment().format('YYYY-MM-DD');
+    $("#input_data_start").val(beforeaweek)
+    $("#input_data_stop").val(today)
     var date_list =[]
     var data_list =[]
     var data_list_all =[]
@@ -385,21 +544,21 @@ H<!doctype html>
                   console.log(data_list_alll)
                   data_llist = []
           });
-          config1.data.datasets[1].label = one_file[0] + "average"
+          config1.data.datasets[1].label =  "average"
           config1.data.datasets[1].data= data_list_alll[0]
-          config2.data.datasets[1].label = one_file[1]
+          config2.data.datasets[1].label = "average"
           config2.data.datasets[1].data= data_list_alll[1]
-          config3.data.datasets[1].label = one_file[2]
+          config3.data.datasets[1].label = "average"
           config3.data.datasets[1].data= data_list_alll[2]
-          config4.data.datasets[1].label = one_file[3]
+          config4.data.datasets[1].label = "average"
           config4.data.datasets[1].data= data_list_alll[3]
-          config5.data.datasets[1].label = one_file[4]
+          config5.data.datasets[1].label = "average"
           config5.data.datasets[1].data= data_list_alll[4]
-          config6.data.datasets[1].label = one_file[5]
+          config6.data.datasets[1].label = "average"
           config6.data.datasets[1].data= data_list_alll[5]
-          config7.data.datasets[1].label = one_file[6]
+          config7.data.datasets[1].label = "average"
           config7.data.datasets[1].data= data_list_alll[6]
-          config8.data.datasets[1].label = one_file[7]
+          config8.data.datasets[1].label = "average"
           config8.data.datasets[1].data= data_list_alll[7]
           // document.getElementById("summary").innerHTML = data_list_all[1]
           window.myLine1.update();

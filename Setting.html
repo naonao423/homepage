@@ -81,7 +81,7 @@ H<!doctype html>
     <div class="container" id="top">
       <div class="row">
         <div  class="col-12" id="graphall">
-          <table>
+          <table id="setting-table">
               <thead class="table table-hover">
                 <th scope="col">教科</th>
                 <th scope="col">一週間当たりの目標勉強時間</th>
@@ -90,6 +90,7 @@ H<!doctype html>
               </tbody>
           </table>
           <button id="setting-change">change</button>
+          <p id="test">test</p>
         </div>
       </div>
     </div>
@@ -97,6 +98,39 @@ H<!doctype html>
 
 
   <script>
+  // var  localurls = "http://127.0.0.1:8000/events/"
+  var localurls = "https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/events/"
+  $('#setting-change').on("click",
+  function(){
+    output_data = []
+    idnt = 1
+    a = $('#setting-table').text()
+
+    dic = a.split(' ')
+    dic.forEach((item) => {
+      if (item.length > 1){
+        output_data.push(item)
+      }})
+    console.log(output_data)
+  value_dic=""
+  output_data.forEach((item, i) => {
+    var valuedata = $('#input-{}'.format(item)).val()
+    value_dic += valuedata
+    value_dic += ";"
+
+  });
+  value_dic = value_dic.slice(0,-1);
+  console.log(value_dic)
+    var urls = localurls + "setting_change/" + value_dic +"/"
+  $.ajax({
+    'url':urls,
+    'type':"PUT",
+  }).done(
+    document.getElementById("test").innerHTML = "成功"
+  ).fail(document.getElementById("test").innerHTML = "失敗")
+})
+
+
 
 
 
