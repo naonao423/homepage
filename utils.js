@@ -1,4 +1,14 @@
 'use strict';
+if (location.href.includes(127)){
+	console.log("ローカルパスです")
+	var root_url = "http://127.0.0.1:8000/"
+	var root_url1 = "http://127.0.0.1:8000/"
+}
+else{
+	console.log("外部ののパスです")
+	var root_url ="https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/"
+}
+
 
 window.chartColors = {
 	red: 'rgb(255, 99, 132)',

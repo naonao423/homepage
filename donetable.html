@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <h5><br></h5>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="utils.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+
+    <!-- 自作javascript -->
+    <script src="done-table/somefunction.js"></script>
+    <script src="done-table/eventer.js"></script>
+
+
+    <nav class="navbar navbar-expand-md navbar-light bg-dark fixed-top">
+    <a class="navbar-brand text-white" href="#">Homename</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="homepage.html">Home<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="programing.html">Programming</a>
+          <li class="nav-item">
+            <a class="nav-link" href="Urls.html">Urls</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="donetable.html">Todos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="datas.html">Data</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="setting.html">Setting</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <title id="top">Hello, world!</title>
+<!-- registermodalの初期設定 -->
+
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="registerModalLabel">達成！</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id="register-body"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"　id="register-close">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- settingmodalの初期設定 -->
+
+        <div class="modal fade" id="settingModal" tabindex="-1" role="dialog" aria-labelledby="settingModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="settingModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- createmodalの初期設定 -->
+
+            <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                     <div class="form-group">
+                       <label for="recipient-name" class="col-form-label">tablename</label>
+                       <input type="text" class="form-control" id="table-name">
+                     </div>
+                     <div class="form-group">
+                       <label for="message-text" class="col-form-label">table's length</label>
+                       <input type="text" class="form-control" id="table-length" value=20></input>
+                     </div>
+                     <div class="form-group">
+                       <label for="message-text" class="col-form-label">data par column</label>
+                       <input type="text" class="form-control" id="table-column" value=10></input>
+                     </div>
+                   </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id='create-table'>Create Table</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <nav id="sidebarmenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+          <div class="sidebar-sticky px-2">
+            <ul class="nav flex-column px-2">
+              <li>
+                <a href="#top" class="nav-link active">
+                  <img src="img/icons/svg/home.svg" alt="" height=20>
+                  Top
+                </a>
+              </li>
+              <li>
+                <a href="" class="nav-link active">
+                  <img src="img/icons/svg/laptop.svg" alt="" height=20>
+                  Data
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link active">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                  test
+                </a>
+              </li>
+              <li>
+                <input type="date" id="input_data_start" value="2020-08-20">
+                <br>
+                <input type="date" id="input_data_stop" value="2020-09-06">
+                <br>
+                <p id="test">ss</p>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+
+
+  <main role="main" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mt-5">
+    <div class="container" id="top">
+      <div class="row" id="main_tablepart">
+        <!--
+        <div  class="col-12 t" id="tid-1">
+          <h3 style="position: absolute; left: 10px; top: 10px">tabletitle</h3>
+          <input type='button'  style="position: absolute; right: 10px; top: 10px" class='btn btn-primary' value="setting"/>
+            <div style="font-size: 40px;"><br></div>
+          <div  class="col-12 c">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td align="center" style="background-color:red;">test1</td>
+                  <td align="center">test2</td>
+                  <td align="center">test3</td>
+                </tr>
+                <tr>
+                  <td align="center">test1</td>
+                  <td align="center">test2</td>
+                  <td align="center">test3</td>
+                </tr>
+                <tr>
+                  <td align="center">test1</td>
+                  <td align="center">test2</td>
+                  <td align="center">test3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="container bottom" >
+            <div class="row">
+              <div  class="col-lg-2 col-sm-4 col-6">
+                <input type='button' class='btn btn-primary' value="auto-generate"/>
+              </div>
+              <div  class="col-lg-8 col-sm-6 col-6">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="input done parameter" aria-label="Recipient's username" aria-describedby="basic-addon2" >
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">Done!</button>
+                  </div>
+                </div>
+              </div>
+              <div  class="col-lg-2 col-sm-2 col-6">
+                <p>達成率<span style="font-size:25px ">   test</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 t" id="tid-2">
+        </div>
+        <div class="col-12 t">
+          <p id="summary"></p>
+        </div>
+       -->
+      </div>
+    </div>
+    <div class="col-12"></div>
+    <button class="btn btn-outline-secondary" style="width: 100%" type="button" data-toggle="modal" data-target="#createModal">create table!</button>
+  </main>
+
+
+  <script>
+
+  // ここで大枠のタイトルを取得
+  var alldata = []
+  var tidlist = []
+  var lenlist = []
+  var graphrow_list = []
+  var tablename_list = []
+  var tablelength = 0
+  var base = ""
+  var urls  = root_url1 + "donetable/"
+    $.ajax({
+      'url':urls,
+      'type':"GET",
+    }).done(function(data){
+    // dataを保存する
+    alldata = data
+
+    result = table_list(data);
+    console.log(tidlist)
+    console.log(lenlist)
+    console.log(graphrow_list)
+    console.log(tablename_list)
+    console.log(tablelength)
+    for (var i=1; i<=tablelength; i++){
+      appendpart = `<div class="col-12 t" id="tid-${tidlist[i-1]}"></div>`;
+      // console.log(appendpart)
+      base += appendpart
+    }
+    $('#main_tablepart').append(base)
+    for (var i=0;  i<=tablelength-1; i++){
+      trrow = Math.floor(lenlist[i]/graphrow_list[i])
+      lastcolumns = lenlist[i]%graphrow_list[i]
+      // console.log(trrow,lastcolumns)
+      //追加する行のベース
+      insertbase = ""
+      // 最初の部分
+      insertbase += `<h3 style="position: absolute; left: 10px; top: 10px">${tablename_list[i]}</h3>` +
+      `<input type="button"  style="position: absolute; right: 10px; top: 10px" class="btn btn-primary" value="setting"/ id=setting-${tidlist[i]}>` +
+      '<div style="font-size: 40px;"><br></div>'+
+      '<div  class="col-12 c">'
+      //tableの部分
+      insertbase += '<table class="table table-bordered">'+'<tbody>'
+      for (var j=1; j<=trrow+1; j++){
+        insertbase += '<tr>'
+        if (j != trrow+1){
+          for (var k=(j-1)*graphrow_list[i]+1; k<=j*graphrow_list[i]; k++){
+            var segment_table = `<td class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${k}</td>`
+            insertbase += segment_table
+          }
+        }
+        else{
+          for (var k=(j-1)*graphrow_list[i]+1; k<=lenlist[i]; k++){
+            var segment_table = `<td  class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${k}</td>`
+            insertbase += segment_table
+          }
+        }
+        insertbase += '</tr>'
+      }
+      insertbase += '</tbody>'+'</table>'
+      insertbase += '</div>'
+      // console.log(insertbase)
+      var gettid = `tid-${tidlist[i]}`
+      // console.log("gettid",gettid)
+      insertbase += '<div class="container bottom">'+
+        '<div class="row">'+
+          '<div  class="col-lg-2 col-sm-4 col-6">'+
+            `<button type="button" class="btn btn-primary autogeness" id=autogene-${tidlist[i]}>auto-generate</button>`+
+            '</div>'+
+            '<div  class="col-lg-8 col-sm-6 col-6">'+
+            '<div class="input-group">'+
+            `<input type="text" class="form-control" placeholder="input done parameter" aria-label="Recipients username" aria-describedby="basic-addon2" id="inputdone-${tidlist[i]}">`+
+              '<div class="input-group-append">'+
+                `<button class="btn btn-outline-secondary" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#registerModal">Done!</button>`+
+              '</div></div></div>'+
+          '<div  class="col-lg-2 col-sm-2 col-6">'+
+            '<p>達成率<span style="font-size:25px ">   test</span></p>'+
+          '</div>'
+      $('#'+gettid).append(insertbase)
+      insertbase =''
+    }
+
+    // $('#main_tablepart').find("#segment-1-1").css("color","rgba(255, 48, 48, 0.6)")
+    show_the_achivement(alldata)
+  }
+
+);
+
+// event軸
+　//　register部分
+  $('#registerModal').on('show.bs.modal',function(event){
+    var button = $(event.relatedTarget)
+    var tid = button.attr('id')
+    console.log(tid)
+    var tid_number = tid.split('-')[1]
+    console.log(tid_number)
+    var inputdone = `inputdone-${tid_number}`
+    var done_number = $("#"+inputdone).val()
+    console.log(typeof done_number)
+    done_number = Number(done_number)
+    console.log(isNaN(done_number))
+    if (!isNaN(done_number)){
+    console.log(done_number)
+    urlss = root_url1 +`donetable/recoad/${tid_number}/${done_number}`
+    $.ajax({
+      "url":urlss,
+      "type" :"PUT"
+    }).done()
+    inputdata = tid_get(tid_number,alldata)
+    console.log('done')
+    // モーダルに値を入力
+    var modal = $(this)
+    modal.find('#register-body').text(inputdata['table_name']+"の"+done_number+"を達成しました。")
+  }
+  else {
+      console.log("sss")
+      var modal = $(this)
+      modal.find('#register-body').text("値が入力されていません")
+    }
+  });
+
+
+  $('#registerModal').on('hidden.bs.modal',function(event){
+    console.log("test")
+      window.location.reload()
+  });
+
+
+
+
+  $('#main_tablepart').on('click','.autogeness',function(event){
+    var button = $(event.target)
+    var tid = button.attr('id')
+    console.log(tid)
+    var tid_number = tid.split('-')[1]
+    console.log(tid_number)
+    var done_number = ramdom_from_done(String(tid_number),alldata)
+
+    select_id_input = `inputdone-${tid_number}`
+    $('#'+select_id_input).val(done_number)
+
+  });
+
+  $("#create-table").on("click",function(event){
+    var table_name =  $("#table-name").val()
+    var table_length = $("#table-length").val()
+    var table_column =  $("#table-column").val()
+    var urls1 = root_url1 + `donetable/create/${table_name}/${table_length}/${table_column}`
+    $.ajax({
+      "url":urls1,
+      "type":"POST"
+    }).done(window.location.reload())
+  })
+
+
+
+
+
+
+
+
+
+  </script>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  </body>
+</html>
