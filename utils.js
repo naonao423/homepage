@@ -7,6 +7,7 @@ if (location.href.includes(127)){
 else{
 	console.log("外部ののパスです")
 	var root_url ="https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/"
+	var root_url1 ="https://qvk1i2a0k2.execute-api.ap-northeast-1.amazonaws.com/api/"
 }
 
 
