@@ -9,7 +9,7 @@ else{
 	var root_url ="https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/"
 	var root_url1 ="https://qvk1i2a0k2.execute-api.ap-northeast-1.amazonaws.com/api/"
 }
-
+console.log(root_url1)
 
 window.chartColors = {
 	red: 'rgb(255, 99, 132)',
