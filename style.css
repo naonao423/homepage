@@ -133,3 +133,31 @@ table-layout: fixed;
 #main_tablepart{
   margin-bottom: 10px;
 }
+
+#one_time{
+  background-color: rgba(130, 130, 130, 0.61);
+}
+
+#second_time{
+  background-color: rgba(74, 255, 0, 0.6);
+}
+
+#three_time{
+  background-color: rgba(55, 189, 255, 0.6);
+}
+
+#four_time{
+  background-color: rgba(73, 28, 255, 0.6);
+}
+
+#five_time{
+  background-color: rgba(226, 231, 9, 0.6);
+}
+
+#six_time{
+  background-color:rgba(255, 122, 0, 0.6);
+}
+
+#seven_time{
+  background-color:rgba(255, 48, 48, 0.6);
+}
