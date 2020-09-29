@@ -61,8 +61,10 @@ function ramdom_from_done(tid,data){
 function show_the_achivement(data){
   data.forEach((item, i) => {
     var all_donetime = item['alldone_times']
+    var all_detail = item['detail']
     console.log(item)
     var tid = item['tid']
+    var over_list = []
     if (item['all_donetime'] != 0){
     var td =`td-${tid}`
 
@@ -73,5 +75,37 @@ function show_the_achivement(data){
       console.log(segment,all_donetime)
       $('#main_tablepart').find('#'+segment).css("background-color",progress_color[all_donetime])
     });
+    all_detail.forEach((item1, i) => {
+      if (item1['times'] > all_donetime + 1){
+        appending_overlist =item1['name']
+        if (!over_list.includes(appending_overlist)){
+         over_list.push(appending_overlist)
+       }
+      console.log("over_list",over_list)
+    over_list.forEach((over_name, i) => {
+      var serach_max = 0
+      console.log(over_name)
+      all_detail.forEach((item, i) => {
+        if (item['name'] == over_name){
+          console.log(item['times'])
+          if (item['times'] > serach_max){
+            search_max = item['times']
+          }
+        }
+
+      });
+      var segment = `segment-${tid}-${over_name}`
+        $('#main_tablepart').find('#'+segment).css("background-color",progress_color[search_max-1])
+    });
+
+
+
+
+
+
+
+      }
+    });
+
     });
 }
