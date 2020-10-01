@@ -88,7 +88,8 @@
                    <input type="text" class="form-control" id="setting-table-name">
                  </div>
                </form>
-               <p id ="settingtest"></p>
+               <p id="settingtest"></p>
+               <button class="btn btn-danger delete-table" type="button" style="width:100%;" id="delete-table">delete table</button>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
@@ -514,7 +515,7 @@
     }
     insertbase += '</tbody>'+'</table>'
     $('#settingtest').append(insertbase)
-    $('#settingtest').append(`<button class="btn btn-danger" type="button" style="width:100%;" id="delete-table-${tid_number}">delete table</button>`)
+    $('.delete-table').attr("id",`delete-table-${tid_number}`)
   });
 
   $('#settingModal').on('shown.bs.modal',function(event){
@@ -573,6 +574,26 @@
   )
 }
   })
+
+var delete_sign = 0
+  $('.delete-table').on("click",function(event){
+    var button = $(event.target)
+    var tid = button.attr('id')
+    console.log(tid)
+    var tid_number = tid.split('-')[2]
+    console.log(tid_number)
+    if (delete_sign == 0){
+      $('.delete-table').append("<br>本当に消していいですか？<br>(いいならもう一度クリックしてください)")
+      delete_sign = 1
+    }
+    else
+    {
+      urls = root_url1 +  `donetable/delete/${tid_number}`
+      $.ajax({
+        "url":urls,
+        "type":'DELETE',
+    }).done(window.location.reload())
+  }})
 
 
 
