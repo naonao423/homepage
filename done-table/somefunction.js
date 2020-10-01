@@ -36,6 +36,7 @@ function table_list(data){
     lenlist.push(item['len']);
     graphrow_list.push(item['graphrow']);
     tablename_list.push(item['table_name']);
+    rowdesplay_list.push(item['row_desplay']);
   });
 }
 
@@ -58,11 +59,13 @@ function ramdom_from_done(tid,data){
   }
 }
 
+
+
 function show_the_achivement(data){
   data.forEach((item, i) => {
     var all_donetime = item['alldone_times']
     var all_detail = item['detail']
-    console.log(item)
+    // console.log(item)
     var tid = item['tid']
     var over_list = []
     if (item['all_donetime'] != 0){
@@ -81,13 +84,13 @@ function show_the_achivement(data){
         if (!over_list.includes(appending_overlist)){
          over_list.push(appending_overlist)
        }
-      console.log("over_list",over_list)
+      // console.log("over_list",over_list)
     over_list.forEach((over_name, i) => {
       var serach_max = 0
-      console.log(over_name)
+      // console.log(over_name)
       all_detail.forEach((item, i) => {
         if (item['name'] == over_name){
-          console.log(item['times'])
+          // console.log(item['times'])
           if (item['times'] > serach_max){
             search_max = item['times']
           }
@@ -97,15 +100,19 @@ function show_the_achivement(data){
       var segment = `segment-${tid}-${over_name}`
         $('#main_tablepart').find('#'+segment).css("background-color",progress_color[search_max-1])
     });
-
-
-
-
-
-
-
       }
     });
 
     });
+}
+
+function setting_table(data,tid){
+  var match_data = ""
+  data.forEach((item, i) => {
+    if (item['tid'] == tid){
+      match_data = item
+    }
+  });
+  console.log(match_data)
+ return match_data
 }

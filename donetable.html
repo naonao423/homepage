@@ -17,7 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 
     <!-- 自作javascript -->
-    <script src="done-table/somefunction.js"></script>
+    <script type="text/javascript" src="done-table/somefunction.js"></script>
     <script src="done-table/eventer.js"></script>
 
 
@@ -73,20 +73,26 @@
     <!-- settingmodalの初期設定 -->
 
         <div class="modal fade" id="settingModal" tabindex="-1" role="dialog" aria-labelledby="settingModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
+          <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="settingModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="settingModalLabel">Setting Modal</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                ...
+                <form>
+                 <div class="form-group">
+                   <label for="recipient-name" class="col-form-label">tablename</label>
+                   <input type="text" class="form-control" id="setting-table-name">
+                 </div>
+               </form>
+               <p id ="settingtest"></p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                <button type="button" class="btn btn-primary changedsetting" id="ChangedSetting-init">Save changes</button>
               </div>
             </div>
           </div>
@@ -171,6 +177,7 @@
                     <td id="seven_time">red</td>
                   </tr>
                 </table>
+                <button type="button" id="jsontest">test</button>
               </li>
             </ul>
           </div>
@@ -249,6 +256,7 @@
   var lenlist = []
   var graphrow_list = []
   var tablename_list = []
+  var rowdesplay_list = []
   var tablelength = 0
   var base = ""
   var urls  = root_url1 + "donetable/"
@@ -265,6 +273,7 @@
     console.log(graphrow_list)
     console.log(tablename_list)
     console.log(tablelength)
+    console.log(rowdesplay_list)
     for (var i=1; i<=tablelength; i++){
       appendpart = `<div class="col-12 t" id="tid-${tidlist[i-1]}"></div>`;
       // console.log(appendpart)
@@ -279,11 +288,55 @@
       insertbase = ""
       // 最初の部分
       insertbase += `<h3 style="position: absolute; left: 10px; top: 10px">${tablename_list[i]}</h3>` +
-      `<input type="button"  style="position: absolute; right: 10px; top: 10px" class="btn btn-primary" value="setting"/ id=setting-${tidlist[i]}>` +
+
+      `<button class="btn btn-outline-secondary"  style="position: absolute; right: 10px; top: 10px" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#settingModal">Setting</button>`+
       '<div style="font-size: 40px;"><br></div>'+
       '<div  class="col-12 c">'
       //tableの部分
       insertbase += '<table class="table table-bordered">'+'<tbody>'
+      console.log(rowdesplay_list[i])
+      if (Object.keys(rowdesplay_list[i]).includes("L")){
+        console.log("test")
+      for (var j=1; j<=trrow+1; j++){
+        insertbase += '<tr>'
+        if (j != trrow+1){
+          for (var k=(j-1)*graphrow_list[i]+1; k<=j*graphrow_list[i]; k++){
+            ks = rowdesplay_list[i]['L'][k-1]
+            var segment_table = `<td class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${ks}</td>`
+            insertbase += segment_table
+          }
+        }
+        else{
+          for (var k=(j-1)*graphrow_list[i]+1; k<=lenlist[i]; k++){
+            ks = rowdesplay_list[i]['L'][k-1]
+            var segment_table = `<td  class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${ks}</td>`
+            insertbase += segment_table
+          }
+        }
+        insertbase += '</tr>'
+      }
+      insertbase += '</tbody>'+'</table>'
+      insertbase += '</div>'
+      // console.log(insertbase)
+      var gettid = `tid-${tidlist[i]}`
+      // console.log("gettid",gettid)
+      insertbase += '<div class="container bottom">'+
+        '<div class="row">'+
+          '<div  class="col-lg-2 col-sm-4 col-6">'+
+            `<button type="button" class="btn btn-primary autogeness" id=autogene-${tidlist[i]}>auto-generate</button>`+
+            '</div>'+
+            '<div  class="col-lg-8 col-sm-6 col-6">'+
+            '<div class="input-group">'+
+            `<input type="text" class="form-control" placeholder="input done parameter" aria-label="Recipients username" aria-describedby="basic-addon2" id="inputdone-${tidlist[i]}">`+
+              '<div class="input-group-append">'+
+                `<button class="btn btn-outline-secondary" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#registerModal">Done!</button>`+
+              '</div></div></div>'+
+          '<div  class="col-lg-2 col-sm-2 col-6">'+
+            '<p>達成率<span style="font-size:25px ">   test</span></p>'+
+          '</div>'
+      $('#'+gettid).append(insertbase)
+    }
+    else{
       for (var j=1; j<=trrow+1; j++){
         insertbase += '<tr>'
         if (j != trrow+1){
@@ -320,6 +373,7 @@
             '<p>達成率<span style="font-size:25px ">   test</span></p>'+
           '</div>'
       $('#'+gettid).append(insertbase)
+    }
       insertbase =''
     }
 
@@ -394,6 +448,109 @@
       "type":"POST"
     }).done(window.location.reload())
   })
+
+
+
+  $('#settingModal').on('show.bs.modal',function(event){
+    var button = $(event.relatedTarget)
+    var tid = button.attr('id')
+    console.log(tid)
+    var tid_number = tid.split('-')[1]
+    console.log(tid_number)
+    console.log(alldata[0])
+    $('#settingtest').empty()
+    var selected_data = setting_table(alldata,tid_number)
+    console.log(selected_data)
+    insertbase = ""
+    trrow = Math.floor(selected_data['len']/selected_data['graphrow'])
+    lastcolumns = selected_data['len']%selected_data['graphrow']
+    // console.log(trrow,lastcolumns)
+    //追加する行のベース
+    insertbase = ""
+    // 最初の部分
+    insertbase += "<p> table name setting</p>"
+    insertbase += '<table class="table table-bordered">'+'<tbody>'
+    for (var j=1; j<=trrow+1; j++){
+      insertbase += '<tr>'
+      if (j != trrow+1){
+        for (var k=(j-1)*selected_data['graphrow']+1; k<=j*selected_data['graphrow']; k++){
+          var setting_index = `segment-${tid_number}-${k}`
+
+          kss = $("#"+setting_index).text()
+          console.log(kss)
+          var segment_table = `<td class="td-${selected_data['tid']}" align="center" id=setting-segment-${selected_data['tid']}-${k}>`+
+          `<input type="text" style="width:40px" id=setting-input-${tid_number}-${k} value="${kss}" />`+"</td>"
+          insertbase += segment_table
+        }
+      }
+      else{
+        for (var k=(j-1)*selected_data['graphrow']+1; k<=selected_data['len']; k++){
+          var setting_index = `segment-${tid_number}-${k}`
+          kss = $("#"+setting_index).text()
+          var segment_table = `<td  class="td-${selected_data['tid']}" align="center" id=setting-segment-${selected_data['tid']}-${k}>`+
+          `<input type="text" style="width:40px" id=setting-input-${tid_number}-${k} value="${kss}"/>`+"</td>"
+          insertbase += segment_table
+        }
+      }
+      insertbase += '</tr>'
+    }
+    insertbase += '</tbody>'+'</table>'
+    $('#settingtest').append(insertbase)
+    $('#settingtest').append(`<button class="btn btn-danger" type="button" style="width:100%;" id="delete-table-${tid_number}">delete table</button>`)
+  });
+
+  $('#settingModal').on('shown.bs.modal',function(event){
+    var button = $(event.relatedTarget)
+    var tid = button.attr('id')
+    var tid_number = tid.split('-')[1]
+    console.log("modal shown!!")
+    $('#settingModal').find('.changedsetting').attr('id',`ChangedSetting-${tid_number}`)
+  })
+
+  $(".changedsetting").on("click",function(event){
+    file_to_send_backend = {}
+    var button = $(event.target)
+    var tid = button.attr('id')
+    console.log(tid)
+    var tid_number = tid.split('-')[1]
+    console.log(tid_number)
+    console.log(alldata[0])
+    var selected_data = setting_table(alldata,tid_number)
+    var table_length = selected_data['len']
+    output_data = []
+    for (var i=1; i<=table_length; i++){
+      index_name = `setting-input-${tid_number}-${i}`
+      console.log(index_name)
+      index_value = $("#"+index_name).val()
+      output_data.push(index_value)
+    }
+    console.log(output_data)
+
+//  バックエンドに送るファイルの整理
+    file_to_send_backend['rowdesplay'] = output_data
+    output_name = $("setting-table-name").val()
+    if (output_name == undefined){
+      output_name = ""
+    }
+    file_to_send_backend['name'] =output_name
+    console.log(file_to_send_backend)
+
+    urls = root_url1 + `donetable/changesetting/${tid_number}`
+    $.ajax({
+      "url":urls,
+      "type":"PUT",
+      'contentType':'application/json',
+      'data': JSON.stringify(file_to_send_backend),
+    }).done(function(data){
+      console.log(data)
+    }
+  )
+  })
+
+
+
+
+
 
 
 
