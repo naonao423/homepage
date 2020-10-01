@@ -48,15 +48,31 @@ function ramdom_from_done(tid,data){
   var min = 1 ;
   var max = len ;
   var i = 0
+  var ramdom_index = 0
+  var end = 0
   while(i=1){
     var a = Math.floor( Math.random() * (max + 1 - min) ) + min ;
     if (donelist.includes(String(a))){
       i = 0
     }
     else{
-        return a
+        ramdom_index = a
+        end = 1
+        console.log(ramdom_index)
+        break;
     }
   }
+  console.log("pass")
+  console.log(inputdata)
+  if (end == 1){
+  if (Object.keys(inputdata['row_desplay']).includes("L")){
+    console.log(inputdata['row_desplay'])
+    return inputdata['row_desplay']['L'][ramdom_index-1]
+  }
+  else{
+    return ramdom_index
+  }
+}
 }
 
 

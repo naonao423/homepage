@@ -394,11 +394,13 @@
     var inputdone = `inputdone-${tid_number}`
     var done_number = $("#"+inputdone).val()
     console.log(typeof done_number)
-    done_number = Number(done_number)
-    console.log(isNaN(done_number))
-    if (!isNaN(done_number)){
-    console.log(done_number)
-    urlss = root_url1 +`donetable/recoad/${tid_number}/${done_number}`
+    done_number1 = Number(done_number)
+    console.log(isNaN(done_number1))
+    var selected_data = tid_get(tid_number,alldata)
+    console.log(selected_data)
+    if (!isNaN(done_number1) && done_number1 != 0){
+    console.log(done_number1)
+    urlss = root_url1 +`donetable/recoad/${tid_number}/${done_number1}`
     $.ajax({
       "url":urlss,
       "type" :"PUT"
@@ -409,10 +411,27 @@
     var modal = $(this)
     modal.find('#register-body').text(inputdata['table_name']+"の"+done_number+"を達成しました。")
   }
-  else {
-      console.log("sss")
+  else if(selected_data['row_desplay']['L'].includes(done_number)){
+    selected_data['row_desplay']['L'].forEach((item, i) => {
+      if (item==done_number){
+        done_number1 = i+1
+      }
+    });
+    console.log(done_number1)
+    urlss = root_url1 +`donetable/recoad/${tid_number}/${done_number1}`
+    $.ajax({
+      "url":urlss,
+      "type" :"PUT"
+    }).done()
+    inputdata = tid_get(tid_number,alldata)
+    console.log('done')
+    // モーダルに値を入力
+    var modal = $(this)
+    modal.find('#register-body').text(inputdata['table_name']+"の"+done_number+"を達成しました。")
+  }
+  else{
       var modal = $(this)
-      modal.find('#register-body').text("値が入力されていません")
+      modal.find('#register-body').text("値が正しく入力されていません")
     }
   });
 
@@ -449,8 +468,7 @@
     }).done(window.location.reload())
   })
 
-
-
+//  setting modal の部分
   $('#settingModal').on('show.bs.modal',function(event){
     var button = $(event.relatedTarget)
     var tid = button.attr('id')
@@ -468,7 +486,7 @@
     //追加する行のベース
     insertbase = ""
     // 最初の部分
-    insertbase += "<p> table name setting</p>"
+    insertbase += "<p id='setting-table-name-label'> table name setting</p>"
     insertbase += '<table class="table table-bordered">'+'<tbody>'
     for (var j=1; j<=trrow+1; j++){
       insertbase += '<tr>'
@@ -525,8 +543,15 @@
       output_data.push(index_value)
     }
     console.log(output_data)
-
+    const unique_output_data = Array.from(new Set(output_data))
+    console.log(unique_output_data)
+    console.log(output_data)
+    if (output_data.length != unique_output_data.length){
+      $("#setting-table-name-label").append(" <p style='color:red; id='unique_error'>同じ値があります</p>")
+    }
+    else{
 //  バックエンドに送るファイルの整理
+      $('#unique_error').empty()
     file_to_send_backend['rowdesplay'] = output_data
     output_name = $("setting-table-name").val()
     if (output_name == undefined){
@@ -543,10 +568,11 @@
       'data': JSON.stringify(file_to_send_backend),
     }).done(function(data){
       console.log(data)
+      window.location.reload()
     }
   )
+}
   })
-
 
 
 
