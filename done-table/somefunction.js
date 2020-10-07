@@ -162,10 +162,12 @@ function check_exist(data,tid){
   console.log(data)
   result = setting_table(data,tid)
   _tag = result['tags']
+  if (_tag != undefined){
   _tag.forEach((item, i) => {
     tag_index="tag-" + item
     console.log(tag_index)
     $("#"+tag_index).prop('checked',true)
   });
+  }
 
 }
