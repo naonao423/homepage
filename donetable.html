@@ -209,6 +209,7 @@
         <div class="row">
           <div class="tab-content">
             <div class="tab-pane fade in active show" id="main_tablepart">
+              <div id="main_tablepart"></div>
 
         <!--
         <div  class="col-12 t" id="tid-1">
@@ -293,6 +294,7 @@
       taglist = get_tag(alldata)
       tab_creation(taglist_unique)
       console.log(taglist)
+      show_the_achivement(alldata)
   }
 );
 
@@ -434,7 +436,7 @@ else{
   insertbase =''
 }
 }
-show_the_achivement(alldata)
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -702,7 +704,7 @@ show_the_achivement(alldata)
       'data': JSON.stringify(file_to_send_backend),
     }).done(function(data){
       console.log(data)
-      // window.location.reload()
+      window.location.reload()
     }
   )
 }
