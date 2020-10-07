@@ -161,3 +161,8 @@ table-layout: fixed;
 #seven_time{
   background-color:rgba(255, 48, 48, 0.6);
 }
+
+.nav-justified{
+  margin-bottom: 10px;
+  width:100%;
+}

@@ -157,3 +157,8 @@ window.chartColors = {
 	/* eslint-enable */
 
 }(this));
+
+function disable_navitem(event){
+	$('body').find(".active").removeClass("active")
+	$(event.target).addClass("active")
+}

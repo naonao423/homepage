@@ -88,6 +88,13 @@
                    <input type="text" class="form-control" id="setting-table-name">
                  </div>
                </form>
+               <form>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">tags</label>
+                  <input type="text" class="form-control" id="setting-table-tags">
+                </div>
+              <div id="exist-tags-setting"></div>
+              </form>
                <p id="settingtest"></p>
                <button class="btn btn-danger delete-table" type="button" style="width:100%;" id="delete-table">delete table</button>
               </div>
@@ -117,6 +124,13 @@
                        <label for="recipient-name" class="col-form-label">tablename</label>
                        <input type="text" class="form-control" id="table-name">
                      </div>
+                     <form>
+                      <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">new tags<span style="font-size: 12px;">(if you want to set multiple tags, you can sepalate by ",")</span></label>
+                        <input type="text" class="form-control" id="table-tags">
+                      </div>
+                    </form>
+                    <div id="exist-tags"></div>
                      <div class="form-group">
                        <label for="message-text" class="col-form-label">table's length</label>
                        <input type="text" class="form-control" id="table-length" value=20></input>
@@ -189,8 +203,13 @@
 
 
   <main role="main" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mt-5">
+    <div id="main"></div>
     <div class="container" id="top">
-      <div class="row" id="main_tablepart">
+
+        <div class="row">
+          <div class="tab-content">
+            <div class="tab-pane fade in active show" id="main_tablepart">
+
         <!--
         <div  class="col-12 t" id="tid-1">
           <h3 style="position: absolute; left: 10px; top: 10px">tabletitle</h3>
@@ -244,6 +263,8 @@
        -->
       </div>
     </div>
+    </div>
+    </div>
     <div class="col-12"></div>
     <button class="btn btn-outline-secondary" style="width: 100%" type="button" data-toggle="modal" data-target="#createModal">create table!</button>
   </main>
@@ -258,149 +279,182 @@
   var graphrow_list = []
   var tablename_list = []
   var rowdesplay_list = []
+  var tag_list = []
   var tablelength = 0
   var base = ""
   var urls  = root_url1 + "donetable/"
+  var taglist_unique = []
     $.ajax({
       'url':urls,
       'type':"GET",
     }).done(function(data){
-    // dataを保存する
-    alldata = data
+      alldata = data
+      table_load(data)
+      taglist = get_tag(alldata)
+      tab_creation(taglist_unique)
+      console.log(taglist)
+  }
+);
 
-    result = table_list(data);
-    console.log(tidlist)
-    console.log(lenlist)
-    console.log(graphrow_list)
-    console.log(tablename_list)
-    console.log(tablelength)
-    console.log(rowdesplay_list)
-    for (var i=1; i<=tablelength; i++){
-      appendpart = `<div class="col-12 t" id="tid-${tidlist[i-1]}"></div>`;
-      // console.log(appendpart)
-      base += appendpart
-    }
-    $('#main_tablepart').append(base)
-    for (var i=0;  i<=tablelength-1; i++){
-      trrow = Math.floor(lenlist[i]/graphrow_list[i])
-      lastcolumns = lenlist[i]%graphrow_list[i]
-      // console.log(trrow,lastcolumns)
-      //追加する行のベース
-      insertbase = ""
-      // 最初の部分
-      insertbase += `<h3 style="position: absolute; left: 10px; top: 10px">${tablename_list[i]}</h3>` +
+// tabを作る部分 //////////////////////////////////////////
+function tab_creation(taglist_unique){
+console.log(taglist_unique)
+tabbase = ""
+tabbase += '<ul class="nav nav-pills nav-justified">' +
+           '<li><a class="active nav-item nav-link" data-toggle="pill" href="#main_tablepart" id="tab-all">All</a></li>'
+taglist_unique.forEach((item, i) => {
+  tabbase += `<li><a class="nav-item nav-link" data-toggle="pill" href="#main_tablepart" id="tab-${item}">${item}</a></li>`
+});
+tabbase += "</ul>"
+console.log(tabbase)
+$('#main').append(tabbase)
+}
 
-      `<button class="btn btn-outline-secondary"  style="position: absolute; right: 10px; top: 10px" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#settingModal">Setting</button>`+
-      '<div style="font-size: 40px;"><br></div>'+
-      '<div  class="col-12 c">'
-      //tableの部分
-      insertbase += '<table class="table table-bordered">'+'<tbody>'
-      console.log(rowdesplay_list[i])
-      if (Object.keys(rowdesplay_list[i]).includes("L")){
-        console.log("test")
-      for (var j=1; j<=trrow+1; j++){
-        insertbase += '<tr>'
-        if (j != trrow+1){
-          for (var k=(j-1)*graphrow_list[i]+1; k<=j*graphrow_list[i]; k++){
-            ks = rowdesplay_list[i]['L'][k-1]
-            var segment_table = `<td class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${ks}</td>`
-            insertbase += segment_table
-          }
-        }
-        else{
-          for (var k=(j-1)*graphrow_list[i]+1; k<=lenlist[i]; k++){
-            ks = rowdesplay_list[i]['L'][k-1]
-            var segment_table = `<td  class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${ks}</td>`
-            insertbase += segment_table
-          }
-        }
-        insertbase += '</tr>'
+// dataを保存する関数 ////////////////////////////////////////////////////////////
+function table_load(data){
+result = table_list(data);
+console.log(tidlist)
+console.log(lenlist)
+console.log(graphrow_list)
+console.log(tablename_list)
+console.log(tablelength)
+console.log(rowdesplay_list)
+console.log(tag_list)
+for (var i=1; i<=tablelength; i++){
+  tag_text = ""
+  tag_list[i-1].forEach((item, i) => {
+    tag_text += "tag-"+ item + " "
+  });
+  appendpart = `<div class="col-12 t ${tag_text}" id="tid-${tidlist[i-1]}"></div>`;
+  // console.log(appendpart)
+  base += appendpart
+}
+$('#main_tablepart').append(base)
+for (var i=0;  i<=tablelength-1; i++){
+  trrow = Math.floor(lenlist[i]/graphrow_list[i])
+  lastcolumns = lenlist[i]%graphrow_list[i]
+  // tag_listの作成
+  tag_text = ""
+  tag_list[i].forEach((item, i) => {
+    tag_text +="#" + item + " "
+  });
+
+
+
+
+  //追加する行のベース
+  insertbase = ""
+  // 最初の部分
+  insertbase += `<h3 style="position: absolute; left: 10px; top: 10px">${tablename_list[i]}<span style="font-size:70%; color:rgba(116, 191, 255, 0.7);"> ${tag_text}</span></h3>` +
+  `<button class="btn btn-outline-secondary"  style="position: absolute; right: 10px; top: 10px" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#settingModal">Setting</button>`+
+  '<div style="font-size: 40px;"><br></div>'+
+  `<div  class="col-12 c">`
+  //tableの部分
+  insertbase += '<table class="table table-bordered">'+'<tbody>'
+  console.log(rowdesplay_list[i])
+  if (Object.keys(rowdesplay_list[i]).includes("L")){
+    console.log("test")
+  for (var j=1; j<=trrow+1; j++){
+    insertbase += '<tr>'
+    if (j != trrow+1){
+      for (var k=(j-1)*graphrow_list[i]+1; k<=j*graphrow_list[i]; k++){
+        ks = rowdesplay_list[i]['L'][k-1]
+        var segment_table = `<td class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${ks}</td>`
+        insertbase += segment_table
       }
-      insertbase += '</tbody>'+'</table>'
-      insertbase += '</div>'
-      // console.log(insertbase)
-      var gettid = `tid-${tidlist[i]}`
-      // console.log("gettid",gettid)
-      insertbase += '<div class="container bottom">'+
-        '<div class="row">'+
-          '<div  class="col-lg-2 col-sm-4 col-6">'+
-            `<button type="button" class="btn btn-primary autogeness" id=autogene-${tidlist[i]}>auto-generate</button>`+
-            '</div>'+
-            '<div  class="col-lg-8 col-sm-6 col-6">'+
-            '<div class="input-group">'+
-            `<input type="text" class="form-control" placeholder="input done parameter" aria-label="Recipients username" aria-describedby="basic-addon2" id="inputdone-${tidlist[i]}">`+
-              '<div class="input-group-append">'+
-                `<button class="btn btn-outline-secondary" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#registerModal">Done!</button>`+
-              '</div></div></div>'+
-          '<div  class="col-lg-2 col-sm-2 col-6">'+
-            '<p>達成率<span style="font-size:25px ">   test</span></p>'+
-          '</div>'
-      $('#'+gettid).append(insertbase)
     }
     else{
-      for (var j=1; j<=trrow+1; j++){
-        insertbase += '<tr>'
-        if (j != trrow+1){
-          for (var k=(j-1)*graphrow_list[i]+1; k<=j*graphrow_list[i]; k++){
-            var segment_table = `<td class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${k}</td>`
-            insertbase += segment_table
-          }
-        }
-        else{
-          for (var k=(j-1)*graphrow_list[i]+1; k<=lenlist[i]; k++){
-            var segment_table = `<td  class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${k}</td>`
-            insertbase += segment_table
-          }
-        }
-        insertbase += '</tr>'
+      for (var k=(j-1)*graphrow_list[i]+1; k<=lenlist[i]; k++){
+        ks = rowdesplay_list[i]['L'][k-1]
+        var segment_table = `<td  class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${ks}</td>`
+        insertbase += segment_table
       }
-      insertbase += '</tbody>'+'</table>'
-      insertbase += '</div>'
-      // console.log(insertbase)
-      var gettid = `tid-${tidlist[i]}`
-      // console.log("gettid",gettid)
-      insertbase += '<div class="container bottom">'+
-        '<div class="row">'+
-          '<div  class="col-lg-2 col-sm-4 col-6">'+
-            `<button type="button" class="btn btn-primary autogeness" id=autogene-${tidlist[i]}>auto-generate</button>`+
-            '</div>'+
-            '<div  class="col-lg-8 col-sm-6 col-6">'+
-            '<div class="input-group">'+
-            `<input type="text" class="form-control" placeholder="input done parameter" aria-label="Recipients username" aria-describedby="basic-addon2" id="inputdone-${tidlist[i]}">`+
-              '<div class="input-group-append">'+
-                `<button class="btn btn-outline-secondary" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#registerModal">Done!</button>`+
-              '</div></div></div>'+
-          '<div  class="col-lg-2 col-sm-2 col-6">'+
-            '<p>達成率<span style="font-size:25px ">   test</span></p>'+
-          '</div>'
-      $('#'+gettid).append(insertbase)
     }
-      insertbase =''
-    }
-
-    // $('#main_tablepart').find("#segment-1-1").css("color","rgba(255, 48, 48, 0.6)")
-    show_the_achivement(alldata)
+    insertbase += '</tr>'
   }
+  insertbase += '</tbody>'+'</table>'
+  insertbase += '</div>'
+  // console.log(insertbase)
+  var gettid = `tid-${tidlist[i]}`
+  // console.log("gettid",gettid)
+  insertbase += '<div class="container bottom">'+
+    '<div class="row">'+
+      '<div  class="col-lg-2 col-sm-4 col-6">'+
+        `<button type="button" class="btn btn-primary autogeness" id=autogene-${tidlist[i]}>auto-generate</button>`+
+        '</div>'+
+        '<div  class="col-lg-8 col-sm-6 col-6">'+
+        '<div class="input-group">'+
+        `<input type="text" class="form-control" placeholder="input done parameter" aria-label="Recipients username" aria-describedby="basic-addon2" id="inputdone-${tidlist[i]}">`+
+          '<div class="input-group-append">'+
+            `<button class="btn btn-outline-secondary" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#registerModal">Done!</button>`+
+          '</div></div></div>'+
+      '<div  class="col-lg-2 col-sm-2 col-6">'+
+        '<p>達成率<span style="font-size:25px ">   test</span></p>'+
+      '</div>'
+  $('#'+gettid).append(insertbase)
+}
+else{
+  for (var j=1; j<=trrow+1; j++){
+    insertbase += '<tr>'
+    if (j != trrow+1){
+      for (var k=(j-1)*graphrow_list[i]+1; k<=j*graphrow_list[i]; k++){
+        var segment_table = `<td class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${k}</td>`
+        insertbase += segment_table
+      }
+    }
+    else{
+      for (var k=(j-1)*graphrow_list[i]+1; k<=lenlist[i]; k++){
+        var segment_table = `<td  class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${k}</td>`
+        insertbase += segment_table
+      }
+    }
+    insertbase += '</tr>'
+  }
+  insertbase += '</tbody>'+'</table>'
+  insertbase += '</div>'
+  // console.log(insertbase)
+  var gettid = `tid-${tidlist[i]}`
+  // console.log("gettid",gettid)
+  insertbase += '<div class="container bottom">'+
+    '<div class="row">'+
+      '<div  class="col-lg-2 col-sm-4 col-6">'+
+        `<button type="button" class="btn btn-primary autogeness" id=autogene-${tidlist[i]}>auto-generate</button>`+
+        '</div>'+
+        '<div  class="col-lg-8 col-sm-6 col-6">'+
+        '<div class="input-group">'+
+        `<input type="text" class="form-control" placeholder="input done parameter" aria-label="Recipients username" aria-describedby="basic-addon2" id="inputdone-${tidlist[i]}">`+
+          '<div class="input-group-append">'+
+            `<button class="btn btn-outline-secondary" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#registerModal">Done!</button>`+
+          '</div></div></div>'+
+      '<div  class="col-lg-2 col-sm-2 col-6">'+
+        '<p>達成率<span style="font-size:25px ">   test</span></p>'+
+      '</div>'
+  $('#'+gettid).append(insertbase)
+}
+  insertbase =''
+}
+}
+show_the_achivement(alldata)
 
-);
+////////////////////////////////////////////////////////////////////////////////
 
 // event軸
 　//　register部分
   $('#registerModal').on('show.bs.modal',function(event){
     var button = $(event.relatedTarget)
     var tid = button.attr('id')
-    console.log(tid)
+    // console.log(tid)
     var tid_number = tid.split('-')[1]
-    console.log(tid_number)
+    // console.log(tid_number)
     var inputdone = `inputdone-${tid_number}`
     var done_number = $("#"+inputdone).val()
-    console.log(typeof done_number)
+    // console.log(typeof done_number)
     done_number1 = Number(done_number)
-    console.log(isNaN(done_number1))
+    // console.log(isNaN(done_number1))
     var selected_data = tid_get(tid_number,alldata)
-    console.log(selected_data)
+    // console.log(selected_data)
     if (!isNaN(done_number1) && done_number1 != 0){
-    console.log(done_number1)
+    // console.log(done_number1)
     urlss = root_url1 +`donetable/recoad/${tid_number}/${done_number1}`
     $.ajax({
       "url":urlss,
@@ -458,19 +512,62 @@
 
   });
 
+  $("#createModal").on("show.bs.modal",function(event){
+    var insertbase = ""
+    insertbase += "<ul>"
+    $("#exist-tags").empty()
+    console.log(taglist_unique)
+    taglist_unique.forEach((item, i) => {
+      console.log(item)
+      insertbase += "<li>" +
+                    `<input type="checkbox" id=tag-${item} name="create-tags" value="${item}">` +
+                    `<label for="tag-${item}">${item}</label>` +
+                    "</li>"
+    });
+    insertbase += "</ul>"
+    console.log(insertbase)
+    $("#exist-tags").append(insertbase)
+  })
+
   $("#create-table").on("click",function(event){
-    var table_name =  $("#table-name").val()
-    var table_length = $("#table-length").val()
-    var table_column =  $("#table-column").val()
-    var urls1 = root_url1 + `donetable/create/${table_name}/${table_length}/${table_column}`
-    $.ajax({
-      "url":urls1,
-      "type":"POST"
-    }).done(window.location.reload())
+      var table_name =  $("#table-name").val()
+      var table_length = $("#table-length").val()
+      var table_column =  $("#table-column").val()
+      var input_data ={}
+
+      var _tag = []; // 配列を定義
+      $('input[name="create-tags"]:checked').each(function() {
+        _tag.push( $(this).val() ); // 配列に値を追加
+      });
+      var tag = $("#table-tags").val()
+      if (tag.includes(",")){
+        console.log(",があります")
+        var tag = tag.split(',')
+        tag.forEach((item, i) => {
+          _tag.push(item)
+        });
+      }
+      else{
+        console.log(",がありません")
+        _tag.push(tag)
+      }
+      input_data['tags'] = _tag
+
+      var urls1 = root_url1 + `donetable/create/${table_name}/${table_length}/${table_column}`
+      $.ajax({
+        "url":urls1,
+        "type":"POST",
+        "contentType":"application/json",
+        "data":JSON.stringify(input_data)
+      }).done(
+        window.location.reload()
+      )
   })
 
 //  setting modal の部分
   $('#settingModal').on('show.bs.modal',function(event){
+    $('#settingtest').empty()
+    $('#exist-tags-setting').empty()
     var button = $(event.relatedTarget)
     var tid = button.attr('id')
     console.log(tid)
@@ -515,10 +612,25 @@
     }
     insertbase += '</tbody>'+'</table>'
     $('#settingtest').append(insertbase)
+    insertbase = ""
     $('.delete-table').attr("id",`delete-table-${tid_number}`)
+
+    // tagの設定
+    taglist_unique.forEach((item, i) => {
+      console.log(item)
+      insertbase += "<li>" +
+                    `<input type="checkbox" id=tag-${item} name="create-tags" value="${item}">` +
+                    `<label for="tag-${item}">${item}</label>` +
+                    "</li>"
+    });
+    insertbase += "</ul>"
+    console.log(insertbase)
+    $("#exist-tags-setting").append(insertbase)
+    check_exist(alldata,tid_number)
   });
 
   $('#settingModal').on('shown.bs.modal',function(event){
+
     var button = $(event.relatedTarget)
     var tid = button.attr('id')
     var tid_number = tid.split('-')[1]
@@ -551,9 +663,30 @@
       $("#setting-table-name-label").append(" <p style='color:red; id='unique_error'>同じ値があります</p>")
     }
     else{
+
+      var _tag = []; // 配列を定義
+      $('input[name="create-tags"]:checked').each(function() {
+        _tag.push( $(this).val() ); // 配列に値を追加
+      });
+      var tag = $("#table-tags").val()
+      if (tag == ""){
+
+      }
+      else if (tag.includes(",")){
+        console.log(",があります")
+        var tag = tag.split(',')
+        tag.forEach((item, i) => {
+          _tag.push(item)
+        });
+      }
+      else{
+        console.log(",がありません")
+        _tag.push(tag)
+      }
 //  バックエンドに送るファイルの整理
       $('#unique_error').empty()
     file_to_send_backend['rowdesplay'] = output_data
+    file_to_send_backend['tags'] = _tag
     output_name = $("setting-table-name").val()
     if (output_name == undefined){
       output_name = ""
@@ -569,7 +702,7 @@
       'data': JSON.stringify(file_to_send_backend),
     }).done(function(data){
       console.log(data)
-      window.location.reload()
+      // window.location.reload()
     }
   )
 }
@@ -595,15 +728,26 @@ var delete_sign = 0
     }).done(window.location.reload())
   }})
 
+  $('#main').on("click",".nav-item",function(event){
 
-
-
-
-
-
-
-
-
+    var button = $(event.target)
+    var tid = button.attr('id')
+    console.log(tid)
+    var tab_name = tid.split("-")[1]
+    if (tab_name == "all"){
+      setTimeout(function(){
+        $(".t").css("display","block")
+    }, 150)
+    }
+    else{
+    tab_name = "tag-" + tab_name
+    console.log(tab_name)
+    setTimeout(function(){
+      $(".t").css("display","block")
+      $(".t").not("."+tab_name).css("display","none")
+  }, 150)
+}
+  })
 
 
 

@@ -37,7 +37,20 @@ function table_list(data){
     graphrow_list.push(item['graphrow']);
     tablename_list.push(item['table_name']);
     rowdesplay_list.push(item['row_desplay']);
+    if (item['tags'] == "" || item['tags'] == [] ||item['tags'] == undefined){
+      empty =[]
+    tag_list.push(empty)
+    }
+    else{
+    tag_list.push(item['tags'])
+    item['tags'].forEach((item, i) => {
+      taglist_unique.push(item)
+      taglist_unique = Array.from(new Set(taglist_unique))
+    });
+
+        }
   });
+  console.log(taglist_unique)
 }
 
 function ramdom_from_done(tid,data){
@@ -131,4 +144,28 @@ function setting_table(data,tid){
   });
   console.log(match_data)
  return match_data
+}
+
+function get_tag(data){
+  return_data = []
+  data.forEach((item, i) => {
+  var item_key = Object.keys(item)
+    if (item_key.includes("tags")){
+        return_data.push(item['tags'])
+    }
+
+  });
+  return return_data
+}
+
+function check_exist(data,tid){
+  console.log(data)
+  result = setting_table(data,tid)
+  _tag = result['tags']
+  _tag.forEach((item, i) => {
+    tag_index="tag-" + item
+    console.log(tag_index)
+    $("#"+tag_index).prop('checked',true)
+  });
+
 }
