@@ -37,20 +37,26 @@ function table_list(data){
     graphrow_list.push(item['graphrow']);
     tablename_list.push(item['table_name']);
     rowdesplay_list.push(item['row_desplay']);
-    if (item['tags'] == "" || item['tags'] == [] ||item['tags'] == undefined){
-      empty =[]
-    tag_list.push(empty)
-    }
-    else{
-    tag_list.push(item['tags'])
-    item['tags'].forEach((item, i) => {
-      taglist_unique.push(item)
-      taglist_unique = Array.from(new Set(taglist_unique))
-    });
 
-        }
+      if (item['tags'] == "" || item['tags'] == [] ||item['tags'] == undefined){
+        empty = []
+      tag_list.push(empty)
+      }
+      else{
+      tag_list.push(item['tags'])
+      item['tags'].forEach((item, i) => {
+        taglist_unique.push(item)
+        taglist_unique = Array.from(new Set(taglist_unique))
+      });
+
+      }
+
+    var all_donetime = item['alldone_times']
+    var table_length = item['len']
+    var done = item['done'].length
+    text_achivementrate = " "+ all_donetime + "回 " + (done/table_length)*100 + "%"
+    achivementratelist.push(text_achivementrate)
   });
-  console.log(taglist_unique)
 }
 
 function ramdom_from_done(tid,data){
@@ -94,18 +100,23 @@ function show_the_achivement(data){
   data.forEach((item, i) => {
     var all_donetime = item['alldone_times']
     var all_detail = item['detail']
+    var all_done = item['done']
     // console.log(item)
     var tid = item['tid']
     var over_list = []
     if (item['all_donetime'] != 0){
     var td =`td-${tid}`
 
-      $('#main_tablepart').find('.'+td).css("background-color",progress_color[all_donetime-1])
-    }
+      $('#main_tablepart').find('.'+td).animate({
+        backgroundColor:progress_color[all_donetime-1],
+    },1000)
+  }
     item['done'].forEach((item, i) => {
       var segment = `segment-${tid}-${item}`
       console.log(segment,all_donetime)
-      $('#main_tablepart').find('#'+segment).css("background-color",progress_color[all_donetime])
+      $('#main_tablepart').find('#'+segment).animate({
+        backgroundColor:progress_color[all_donetime],
+    },1000)
     });
     all_detail.forEach((item1, i) => {
       if (item1['times'] > all_donetime + 1){
@@ -127,10 +138,14 @@ function show_the_achivement(data){
 
       });
       var segment = `segment-${tid}-${over_name}`
-        $('#main_tablepart').find('#'+segment).css("background-color",progress_color[search_max-1])
+        $('#main_tablepart').find('#'+segment).animate({
+          backgroundColor:progress_color[search_max-1],
+      },1000)
     });
       }
     });
+    // 達成率のほうの編集をする。
+    var achivementrate = item['done'].length / item['len']
 
     });
 }

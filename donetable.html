@@ -15,6 +15,7 @@
     <script src="utils.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- 自作javascript -->
     <script type="text/javascript" src="done-table/somefunction.js"></script>
@@ -285,6 +286,7 @@
   var base = ""
   var urls  = root_url1 + "donetable/"
   var taglist_unique = []
+  var achivementratelist =[]
     $.ajax({
       'url':urls,
       'type':"GET",
@@ -322,6 +324,7 @@ console.log(tablename_list)
 console.log(tablelength)
 console.log(rowdesplay_list)
 console.log(tag_list)
+console.log(achivementratelist)
 for (var i=1; i<=tablelength; i++){
   tag_text = ""
   tag_list[i-1].forEach((item, i) => {
@@ -384,14 +387,14 @@ for (var i=0;  i<=tablelength-1; i++){
       '<div  class="col-lg-2 col-sm-4 col-6">'+
         `<button type="button" class="btn btn-primary autogeness" id=autogene-${tidlist[i]}>auto-generate</button>`+
         '</div>'+
-        '<div  class="col-lg-8 col-sm-6 col-6">'+
+        '<div  class="col-lg-7 col-sm-8 col-6">'+
         '<div class="input-group">'+
         `<input type="text" class="form-control" placeholder="input done parameter" aria-label="Recipients username" aria-describedby="basic-addon2" id="inputdone-${tidlist[i]}">`+
           '<div class="input-group-append">'+
             `<button class="btn btn-outline-secondary" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#registerModal">Done!</button>`+
           '</div></div></div>'+
-      '<div  class="col-lg-2 col-sm-2 col-6">'+
-        '<p>達成率<span style="font-size:25px ">   test</span></p>'+
+      '<div  class="col-lg-3 col-sm-6 col-6">'+
+        `<p  class="achivement" id=achivementrate-${tidlist[i]}>達成率<span style="font-size:1em">${achivementratelist[i]}</span></p>`+
       '</div>'
   $('#'+gettid).append(insertbase)
 }
@@ -422,14 +425,14 @@ else{
       '<div  class="col-lg-2 col-sm-4 col-6">'+
         `<button type="button" class="btn btn-primary autogeness" id=autogene-${tidlist[i]}>auto-generate</button>`+
         '</div>'+
-        '<div  class="col-lg-8 col-sm-6 col-6">'+
+        '<div  class="col-lg-7 col-sm-8 col-6">'+
         '<div class="input-group">'+
         `<input type="text" class="form-control" placeholder="input done parameter" aria-label="Recipients username" aria-describedby="basic-addon2" id="inputdone-${tidlist[i]}">`+
           '<div class="input-group-append">'+
             `<button class="btn btn-outline-secondary" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#registerModal">Done!</button>`+
           '</div></div></div>'+
-      '<div  class="col-lg-2 col-sm-2 col-6">'+
-        '<p>達成率<span style="font-size:25px ">   test</span></p>'+
+      '<div  class="col-lg-3 col-sm-6 col-6">'+
+        `<p class="achivement" id=achivementrate-${tidlist[i]}>達成率<span style="font-size:1em ">${achivementratelist[i]}</span></p>`+
       '</div>'
   $('#'+gettid).append(insertbase)
 }
@@ -542,7 +545,11 @@ else{
         _tag.push( $(this).val() ); // 配列に値を追加
       });
       var tag = $("#table-tags").val()
-      if (tag.includes(",")){
+      console.log(tag)
+      if (tag == ""){
+        console.log("pass")
+      }
+      else if (tag.includes(",")){
         console.log(",があります")
         var tag = tag.split(',')
         tag.forEach((item, i) => {
@@ -562,7 +569,7 @@ else{
         "contentType":"application/json",
         "data":JSON.stringify(input_data)
       }).done(
-        window.location.reload()
+        // window.location.reload()
       )
   })
 
