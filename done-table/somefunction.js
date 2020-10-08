@@ -54,7 +54,8 @@ function table_list(data){
     var all_donetime = item['alldone_times']
     var table_length = item['len']
     var done = item['done'].length
-    text_achivementrate = " "+ all_donetime + "回 " + (done/table_length)*100 + "%"
+    text_achivementrate = " "+ all_donetime + "回 " + Math.round((done/table_length)*100) + "%"
+
     achivementratelist.push(text_achivementrate)
   });
 }
