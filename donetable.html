@@ -385,7 +385,7 @@ for (var i=0;  i<=tablelength-1; i++){
     '<div class="row">'+
       "<div  class='col-12 progress-show'>"+
         `<div id="progress-${tidlist[i]}" class="progress" style="height:7px;>`+
-          `<div id="achivementbar0-${tidlist[i]}" class="progress-bar" role="progressbar" style="width:0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">`+
+          `<div id="achivementbar0-${tidlist[i]}" class="progress-bar" role="progressbar" style="width:0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>`+
         `</div>`+
       "</div>"+
       '<div  class="col-lg-1 col-sm-2 col-2">'+
@@ -399,7 +399,8 @@ for (var i=0;  i<=tablelength-1; i++){
           '</div></div></div>'+
       '<div  class="col-lg-3 col-sm-4 col-5">'+
         `<p  class="achivement" id=achivementrate-${tidlist[i]}>達成率<span style="font-size:1em">${achivementratelist[i]}</span></p>`+
-      '</div>'
+      '</div>'+
+    "</div>"
   $('#'+gettid).append(insertbase)
 }
 else{
@@ -427,8 +428,8 @@ else{
   insertbase += '<div class="container bottom">'+
     '<div class="row">'+
       "<div  class='col-12 progress-show'>"+
-        `<div id="progress-${tidlist[i]}" class="progress" style='height:7px;' >`+
-          `<div id="achivementbar0-${tidlist[i]}" class="progress-bar" role="progressbar" style="width:0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">`+
+        `<div id="progress-${tidlist[i]}" class="progress" style='height:7px;'>`+
+          `<div id="achivementbar0-${tidlist[i]}" class="progress-bar" role="progressbar" style="width:0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>`+
         `</div>`+
       "</div>"+
       '<div  class="col-lg-1 col-sm-2 col-2">'+
@@ -442,7 +443,8 @@ else{
           '</div></div></div>'+
       '<div  class="col-lg-3 col-sm-4 col-5">'+
         `<p class="achivement" id=achivementrate-${tidlist[i]}>達成率<span style="font-size:1em ">${achivementratelist[i]}</span></p>`+
-      '</div>'
+      '</div>'+
+    "</div>"
   $('#'+gettid).append(insertbase)
 }
   insertbase =''
