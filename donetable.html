@@ -210,7 +210,6 @@
         <div class="row">
           <div class="tab-content">
             <div class="tab-pane fade in active show" id="main_tablepart">
-              <div id="main_tablepart"></div>
 
         <!--
         <div  class="col-12 t" id="tid-1">
@@ -287,6 +286,7 @@
   var urls  = root_url1 + "donetable/"
   var taglist_unique = []
   var achivementratelist =[]
+  var achivementratelist_only_parsent = []
     $.ajax({
       'url':urls,
       'type':"GET",
@@ -295,14 +295,13 @@
       table_load(data)
       taglist = get_tag(alldata)
       tab_creation(taglist_unique)
-      console.log(taglist)
       show_the_achivement(alldata)
+      show_achivement_bar(tidlist,achivementratelist)
   }
 );
 
 // tabを作る部分 //////////////////////////////////////////
 function tab_creation(taglist_unique){
-console.log(taglist_unique)
 tabbase = ""
 tabbase += '<ul class="nav nav-pills nav-justified">' +
            '<li><a class="active nav-item nav-link" data-toggle="pill" href="#main_tablepart" id="tab-all">All</a></li>'
@@ -310,21 +309,21 @@ taglist_unique.forEach((item, i) => {
   tabbase += `<li><a class="nav-item nav-link" data-toggle="pill" href="#main_tablepart" id="tab-${item}">${item}</a></li>`
 });
 tabbase += "</ul>"
-console.log(tabbase)
 $('#main').append(tabbase)
 }
 
 // dataを保存する関数 ////////////////////////////////////////////////////////////
 function table_load(data){
 result = table_list(data);
-console.log(tidlist)
-console.log(lenlist)
-console.log(graphrow_list)
-console.log(tablename_list)
-console.log(tablelength)
-console.log(rowdesplay_list)
-console.log(tag_list)
-console.log(achivementratelist)
+console.log("tidlist",tidlist)
+console.log("lenlist",lenlist)
+console.log("graphrow_list",graphrow_list)
+console.log("tablename_list",tablename_list)
+console.log("tablelength",tablelength)
+console.log("rowdesplay_list",rowdesplay_list)
+console.log("tag_list",tag_list)
+console.log("achivementeratelist",achivementratelist)
+console.log("taglist_unique",taglist_unique)
 for (var i=1; i<=tablelength; i++){
   tag_text = ""
   tag_list[i-1].forEach((item, i) => {
@@ -350,15 +349,15 @@ for (var i=0;  i<=tablelength-1; i++){
   //追加する行のベース
   insertbase = ""
   // 最初の部分
-  insertbase += `<h3 style="position: absolute; left: 10px; top: 10px">${tablename_list[i]}<span style="font-size:70%; color:rgba(116, 191, 255, 0.7);"> ${tag_text}</span></h3>` +
+  insertbase += `<h3 style="position: absolute; left: 10px; top: 10px;">${tablename_list[i]}<span style="font-size:70%; color:rgba(116, 191, 255, 0.7);"> ${tag_text}</span></h3>` +
   `<button class="btn btn-outline-secondary"  style="position: absolute; right: 10px; top: 10px" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#settingModal">Setting</button>`+
   '<div style="font-size: 40px;"><br></div>'+
   `<div  class="col-12 c">`
   //tableの部分
   insertbase += '<table class="table table-bordered">'+'<tbody>'
-  console.log(rowdesplay_list[i])
+
   if (Object.keys(rowdesplay_list[i]).includes("L")){
-    console.log("test")
+    console.log(rowdesplay_list[i])
   for (var j=1; j<=trrow+1; j++){
     insertbase += '<tr>'
     if (j != trrow+1){
@@ -384,16 +383,21 @@ for (var i=0;  i<=tablelength-1; i++){
   // console.log("gettid",gettid)
   insertbase += '<div class="container bottom">'+
     '<div class="row">'+
-      '<div  class="col-lg-2 col-sm-4 col-6">'+
-        `<button type="button" class="btn btn-primary autogeness" id=autogene-${tidlist[i]}>auto-generate</button>`+
+      "<div  class='col-12 progress-show'>"+
+        `<div id="progress-${tidlist[i]}" class="progress" style="height:7px;>`+
+          `<div id="achivementbar0-${tidlist[i]}" class="progress-bar" role="progressbar" style="width:0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>`+
+        `</div>`+
+      "</div>"+
+      '<div  class="col-lg-1 col-sm-2 col-2">'+
+        `<button type="button" class="btn btn-primary autogeness" id=autogene-${tidlist[i]}>auto</button>`+
         '</div>'+
-        '<div  class="col-lg-7 col-sm-8 col-6">'+
+        '<div  class="col-lg-8 col-sm-6 col-5">'+
         '<div class="input-group">'+
         `<input type="text" class="form-control" placeholder="input done parameter" aria-label="Recipients username" aria-describedby="basic-addon2" id="inputdone-${tidlist[i]}">`+
           '<div class="input-group-append">'+
             `<button class="btn btn-outline-secondary" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#registerModal">Done!</button>`+
           '</div></div></div>'+
-      '<div  class="col-lg-3 col-sm-6 col-6">'+
+      '<div  class="col-lg-3 col-sm-4 col-5">'+
         `<p  class="achivement" id=achivementrate-${tidlist[i]}>達成率<span style="font-size:1em">${achivementratelist[i]}</span></p>`+
       '</div>'
   $('#'+gettid).append(insertbase)
@@ -422,16 +426,21 @@ else{
   // console.log("gettid",gettid)
   insertbase += '<div class="container bottom">'+
     '<div class="row">'+
-      '<div  class="col-lg-2 col-sm-4 col-6">'+
-        `<button type="button" class="btn btn-primary autogeness" id=autogene-${tidlist[i]}>auto-generate</button>`+
+      "<div  class='col-12 progress-show'>"+
+        `<div id="progress-${tidlist[i]}" class="progress" style='height:7px;' >`+
+          `<div id="achivementbar0-${tidlist[i]}" class="progress-bar" role="progressbar" style="width:0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>`+
+        `</div>`+
+      "</div>"+
+      '<div  class="col-lg-1 col-sm-2 col-2">'+
+        `<button type="button" class="btn btn-primary autogeness" id=autogene-${tidlist[i]}>auto</button>`+
         '</div>'+
-        '<div  class="col-lg-7 col-sm-8 col-6">'+
+        '<div  class="col-lg-8 col-sm-6 col-5">'+
         '<div class="input-group">'+
         `<input type="text" class="form-control" placeholder="input done parameter" aria-label="Recipients username" aria-describedby="basic-addon2" id="inputdone-${tidlist[i]}">`+
           '<div class="input-group-append">'+
             `<button class="btn btn-outline-secondary" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#registerModal">Done!</button>`+
           '</div></div></div>'+
-      '<div  class="col-lg-3 col-sm-6 col-6">'+
+      '<div  class="col-lg-3 col-sm-4 col-5">'+
         `<p class="achivement" id=achivementrate-${tidlist[i]}>達成率<span style="font-size:1em ">${achivementratelist[i]}</span></p>`+
       '</div>'
   $('#'+gettid).append(insertbase)
@@ -569,7 +578,6 @@ else{
         "contentType":"application/json",
         "data":JSON.stringify(input_data)
       }).done(
-        // window.location.reload()
       )
   })
 
@@ -734,7 +742,7 @@ var delete_sign = 0
       $.ajax({
         "url":urls,
         "type":'DELETE',
-    }).done(window.location.reload())
+    }).done()
   }})
 
   $('#main').on("click",".nav-item",function(event){

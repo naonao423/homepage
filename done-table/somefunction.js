@@ -55,8 +55,8 @@ function table_list(data){
     var table_length = item['len']
     var done = item['done'].length
     text_achivementrate = " "+ all_donetime + "回 " + Math.round((done/table_length)*100) + "%"
-
     achivementratelist.push(text_achivementrate)
+    achivementratelist_only_parsent.push(Math.round((done/table_length)*100))
   });
 }
 
@@ -96,7 +96,7 @@ function ramdom_from_done(tid,data){
 }
 
 
-
+// こっちはタイルにある色を変化する変数
 function show_the_achivement(data){
   data.forEach((item, i) => {
     var all_donetime = item['alldone_times']
@@ -107,20 +107,20 @@ function show_the_achivement(data){
     var over_list = []
     if (item['all_donetime'] != 0){
     var td =`td-${tid}`
-
+    for (let t=0; t<all_donetime; t++){
       $('#main_tablepart').find('.'+td).animate({
-        backgroundColor:progress_color[all_donetime-1],
+        backgroundColor:progress_color[t],
     },1000)
+    }
   }
     item['done'].forEach((item, i) => {
       var segment = `segment-${tid}-${item}`
-      console.log(segment,all_donetime)
       $('#main_tablepart').find('#'+segment).animate({
         backgroundColor:progress_color[all_donetime],
     },1000)
     });
     all_detail.forEach((item1, i) => {
-      if (item1['times'] > all_donetime + 1){
+      if (item1['times'] > all_donetime){
         appending_overlist =item1['name']
         if (!over_list.includes(appending_overlist)){
          over_list.push(appending_overlist)
@@ -150,6 +150,85 @@ function show_the_achivement(data){
 
     });
 }
+
+// 進行バにアニメーションを付ける関数
+function show_achivement_bar(tidlist,data){
+  tidlist.forEach((item, i) => {
+    var datalist = data[i].split("回 ")
+    if(datalist[0]==0){
+    var progressbar0 = `achivementbar0-${item}`
+    plusvalue= "+="+datalist[1]
+    $('#main_tablepart').find('#'+progressbar0).css("background-color","gray")
+    $('#main_tablepart').find('#'+progressbar0).animate({
+      width:plusvalue
+    },1000)
+  }
+
+  else{
+    // 何回処理するかを決定する
+    var animate_time = Number(datalist[0])
+    var l = 1
+    var progressbar0 = `achivementbar0-${item}`
+    // 一番最初の処理
+    $('#main_tablepart').find('#'+progressbar0).css("background-color","gray")
+    $('#main_tablepart').find('#'+progressbar0).animate({
+      width:"+=100%"
+    },500,function(){
+      changebar(l,animate_time,item,datalist[1],i)
+    })
+
+  }
+});
+}
+
+
+function changebar(l,animate_time,item,parsent_part,i){
+  if(l < animate_time){
+    var change_bar_speed1 = 1000 * (animate_time - l) / animate_time
+    var change_bar_speed2 = 1000 * (animate_time - l) / animate_time
+    push_part = `<div id="achivementbar${l}-${tidlist[i]}" class="progress-bar" role="progressbar" style="width:0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>`
+    progress_id =`progress-${item}`
+    $('#main_tablepart').find('#'+progress_id).prepend(push_part)
+    var progressbar_b = `achivementbar${l-1}-${item}`
+    var progressbar = `achivementbar${l}-${item}`
+    $('#main_tablepart').find('#'+progressbar).css("background-color",progress_color[l])
+    $('#main_tablepart').find('#'+progressbar).animate({
+        width:"+=100%"
+    },change_bar_speed1,function(){
+      $('#main_tablepart').find('#'+progressbar_b).animate({
+        width:"-=100%"
+      },change_bar_speed2,function(){
+        l += 1
+        changebar(l,animate_time,item,parsent_part,i)
+      })})
+  }
+  else{
+    var decrease_part = Number(parsent_part.split("%")[0])
+    var increase_part = 100 - decrease_part
+
+    var plus_value = "+="+decrease_part+"%"
+    var minus_value = "+="+increase_part+"%"
+    var change_bar_speed1 = 1000 * (animate_time - l) / animate_time
+    var change_bar_speed2 = 1000 * (animate_time - 4*l) / animate_time
+    push_part = `<div id="achivementbar${l}-${tidlist[i]}" class="progress-bar" role="progressbar" style="width:0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>`
+    progress_id =`progress-${item}`
+    $('#main_tablepart').find('#'+progress_id).prepend(push_part)
+    var progressbar_b = `achivementbar${l-1}-${item}`
+    var progressbar = `achivementbar${l}-${item}`
+    $('#main_tablepart').find('#'+progressbar).css("background-color",progress_color[l])
+    $('#main_tablepart').find('#'+progressbar).animate({
+        width:plus_value
+    },change_bar_speed1,function(){
+      $('#main_tablepart').find('#'+progressbar_b).animate({
+        width:minus_value
+      },change_bar_speed2,function(){
+        return
+      })})
+
+  }
+
+}
+
 
 function setting_table(data,tid){
   var match_data = ""

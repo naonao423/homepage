@@ -56,6 +56,13 @@ li {
   padding-top: :100px;
   }
 
+.progress-show{
+  padding:10px;
+  padding-top:0px;
+  padding-left:14px;
+  padding-right:14px;
+}
+
 .container-fluid div{
 
 }
