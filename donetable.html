@@ -582,11 +582,11 @@ else{
       }).done(
         $("#createModal").modal('hide')
       )
+      $.ajaxComplete(function() {
+        window.location.reload()
+      })
   })
 
-  $('#createModal').on('show.bs.modal',function(event){
-    window.location.reload()
-  })
 
 //  setting modal の部分
   $('#settingModal').on('show.bs.modal',function(event){
