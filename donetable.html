@@ -581,10 +581,12 @@ else{
         "data":JSON.stringify(input_data)
       }).done(
         $("#createModal").modal('hide')
-      )
-      $.ajaxComplete(function() {
+      ).always(
+        (function(){
         window.location.reload()
-      })
+      }
+    )
+  )
   })
 
 
@@ -727,7 +729,12 @@ else{
       console.log(data)
       $("#settingModal").modal('hide')
     }
-  )
+  ).always(
+    (function(){
+    window.location.reload()
+  }
+)
+)
 }
   })
 
