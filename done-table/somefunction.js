@@ -254,7 +254,6 @@ function get_tag(data){
 }
 
 function check_exist(data,tid){
-  console.log(data)
   result = setting_table(data,tid)
   _tag = result['tags']
   if (_tag != undefined){
@@ -264,6 +263,34 @@ function check_exist(data,tid){
     $("#"+tag_index).prop('checked',true)
   });
   }
-
 }
 
+function recently_highright(data){
+  data.forEach((item, i) => {
+    item['detail'].sort(function(a,b) {
+    return (a.date < b.date ? 1 : -1);
+    });
+    var resently_list = []
+    for (let i = 0; i < 3; i++){
+      resently_list.push(item['detail'][2-i]['name'])
+    }
+    change_font_color0 = `segment-${item['tid']}-${resently_list[0]}`
+    change_font_color1 = `segment-${item['tid']}-${resently_list[1]}`
+    change_font_color2 = `segment-${item['tid']}-${resently_list[2]}`
+    console.log(change_font_color0)
+    console.log(change_font_color1)
+    console.log(change_font_color2)
+    $("#main_tablepart").find("#"+change_font_color0).animate({
+      "border": "solid 3px",
+        "border-color": "green"
+    },200)
+    $("#main_tablepart").find("#"+change_font_color1).animate({
+      "border": "10px solid",
+          "border-color": "yellow"
+    },200)
+    $("#main_tablepart").find("#"+change_font_color2).animate({
+      "border": "10px solid",
+          "border-color": "red"
+    },200)
+  });
+}

@@ -297,6 +297,7 @@
       tab_creation(taglist_unique)
       show_the_achivement(alldata)
       show_achivement_bar(tidlist,achivementratelist)
+      recently_highright(alldata)
   }
 );
 
@@ -759,7 +760,12 @@ var delete_sign = 0
       $.ajax({
         "url":urls,
         "type":'DELETE',
-    }).done()
+    }).done().always(
+      (function(){
+       window.location.reload()
+    }
+  )
+  )
   }})
 
   $('#main').on("click",".nav-item",function(event){
