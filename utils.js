@@ -4,7 +4,7 @@ if (location.href.includes(127)){
 	// var root_url = "http://127.0.0.1:8000/"
 	// var root_url1 = "http://127.0.0.1:8000/"
   var root_url ="https://0bapdngfga.execute-api.ap-northeast-1.amazonaws.com/api/"
-	var root_url1 ="https://9sgd4hb15a.execute-api.ap-northeast-1.amazonaws.com/api/"
+  var root_url1 ="https://9sgd4hb15a.execute-api.ap-northeast-1.amazonaws.com/api/"
 }
 else{
 	console.log("外部ののパスです")

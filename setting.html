@@ -126,6 +126,7 @@ H<!doctype html>
   value_dic = value_dic.slice(0,-1);
   console.log(value_dic)
     var urls = localurls + "setting_change/" + value_dic +"/"
+    console.log(urls)
   $.ajax({
     'url':urls,
     'type':"PUT",

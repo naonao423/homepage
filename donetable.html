@@ -712,7 +712,7 @@ else{
       $('#unique_error').empty()
     file_to_send_backend['rowdesplay'] = output_data
     file_to_send_backend['tags'] = _tag
-    output_name = $("setting-table-name").val()
+    output_name = $("#setting-table-name").val()
     if (output_name == undefined){
       output_name = ""
     }
@@ -727,11 +727,11 @@ else{
       'data': JSON.stringify(file_to_send_backend),
     }).done(function(data){
       console.log(data)
-      $("#settingModal").modal('hide')
+        $("#settingModal").modal('hide')
     }
   ).always(
     (function(){
-    window.location.reload()
+     window.location.reload()
   }
 )
 )
@@ -739,7 +739,7 @@ else{
   })
 
   $('#settingModal').on('hidden.bs.modal',function(event){
-    window.location.reload()
+    // window.location.reload()
   })
 
 var delete_sign = 0
