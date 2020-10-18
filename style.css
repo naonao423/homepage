@@ -6,6 +6,7 @@
 .col-xl-
 */
 
+
 li {
     display: list-item;
     text-align: -webkit-match-parent;
@@ -83,7 +84,8 @@ li {
   border:solid 1px rgba(148, 138, 149, 0.55);
 }
 
-#graphall{
+.o{
+  margin:5px;
   border:solid 1px rgba(148, 138, 149, 0.55);
 }
 
@@ -105,8 +107,17 @@ li {
   padding-bottom: 5px;
 }
 
+#content-1{
+    height: calc(75vh - 9rem);
+    overflow-y: hidden;
+}
+
 .table{
   widows: 100%;
+}
+
+#table-title{
+  padding-top:10px;
 }
 
 .alt-table-responsive {
