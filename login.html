@@ -79,7 +79,7 @@
     }
     else{
       $.cookie("session_id",data['session_id'],{path:"/"});
-      location.href = "/homepage.html"
+      location.href = "./homepage.html"
     }
   }).fail(function(jqXHR, textStatus, errorThrown){
     console.log(jqXHR)

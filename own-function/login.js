@@ -4,7 +4,7 @@ function detect(){
   send_file = {}
   var session_id = $.cookie("session_id")
   if ( session_id == undefined){
-    location.href = '/login.html'
+    location.href = './login.html'
   }
   else{
     send_file["session_id"] = session_id
