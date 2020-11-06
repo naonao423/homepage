@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Bootstrap CSS -->
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> -->
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="css/login_form.css">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="utils.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <!-- 自作javascript -->
+  <script type="text/javascript" src="done-table/somefunction.js"></script>
+  <script src="done-table/eventer.js"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <form>
+    <h1><span>My</span> page</h1>
+    <input placeholder="Username" type="text" id="user_id"/>
+    <input placeholder="Password" type="password" id="password"/>
+    <p id="error_log"></p>
+    <button type="button" class="btn" id="login">Log in</button>
+    <h6>Go to Test Page</h6>
+  </form>
+
+  <footer>
+    <h5>Right click and visit: <a target="_blank" href="https://github.com/naonao423">My Github Site</a></h5>
+  </footer>
+
+
+<script>
+
+
+  // <label for="user_id">id</label>
+  // <input type="text" id ="user_id">
+  // <br>
+  // <label for="password">pass</label>
+  // <input type="password" id ="password">
+  // <button id="login">login</button>
+  // <p id ="error_log"></p>
+  // <button id="logout">logout</button>
+
+  $("#login").on("click", function(){
+    console.log("test")
+    send_file = {}
+    var user_id = $('#user_id').val()
+    var password = $("#password").val()
+    if (user_id == ""){
+      $('#error_log').text("idが入力されていません")
+    }
+    else if (password == ""){
+      $('#error_log').text("passwordが入力されていません")
+    }
+    else{
+    send_file['user_id'] = user_id
+    send_file['password'] = password
+    console.log(user_id)
+    console.log(password)
+    console.log(JSON.stringify(send_file))
+    $.ajax({
+      "url":loginurl,
+      "type":'POST',
+      contentType:'application/json',
+      data: JSON.stringify(send_file)
+  }).done(function(data){
+    console.log(Object.keys(data))
+    if (Object.keys(data).includes("error")){
+      $("#error_log").text("idかpasswordを間違えています")
+    }
+    else{
+      $.cookie("session_id",data['session_id'],{path:"/"});
+      location.href = "/homepage.html"
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    console.log(jqXHR)
+    console.log(textStatus)
+    console.log(errorThrown)
+  })
+}})
+
+  $('#logout').on("click",function(){
+    session_id = $.cookie("session_id")
+    $.removeCookie("session_id")
+    send_file2 = {"session_id":session_id}
+    $.ajax({
+      "url":logouturl,
+      "type":'POST',
+      contentType:'application/json',
+      data: JSON.stringify(send_file2)
+  }).done(function(data){
+    $("#error_log").text(data['Items'])
+    })
+  })
+    // $.ajax({
+    //   url:urlaa,
+    //   type:'POST',
+
+    // }).done(function(data){
+    //   console.log(data)
+    //   $("#error").text(data)
+    // })
+
+
+</script>
+</body>
+</html>
