@@ -1,8 +1,7 @@
 function detect(){
-  console.log("sssss")
-  check_url = "http://127.0.0.1:8000/check"
   send_file = {}
   var session_id = $.cookie("session_id")
+  console.log(session_id)
   if ( session_id == undefined){
     location.href = './login.html'
   }
@@ -16,11 +15,24 @@ function detect(){
       contentType:'application/json'
   }).done(function(data){
     console.log(data)
+    if (data['error'] == "no_session_id"){
+      location.href = '/login.html'
+    }
     $('#answer').text(data['user_id'])
+    ret = data['user_id']
+    guest(ret)
+    return ret
   }).fail(function(xhr, textStatus, errorThrown) {
         console.log("NG:" + textStatus.status);
         location.href = '/login.html'
+        ret = 0
+        return ret
     }
   )
   }
+}
+
+
+function guest(ret){
+  $("#web_title").text(ret)
 }

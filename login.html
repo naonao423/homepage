@@ -30,11 +30,11 @@
     <input placeholder="Password" type="password" id="password"/>
     <p id="error_log"></p>
     <button type="button" class="btn" id="login">Log in</button>
-    <h6>Go to Test Page</h6>
+    <h6>Go to <a target="_blank"  style="color:red" id="guest_page">Guest Page</a></h6>
   </form>
 
   <footer>
-    <h5>Right click and visit: <a target="_blank" href="https://github.com/naonao423">My Github Site</a></h5>
+    <h5>Right click and visit: <a target="_blank" href="https://github.com/naonao423" style="color:red">My Github Site</a></h5>
   </footer>
 
 
@@ -49,6 +49,14 @@
   // <button id="login">login</button>
   // <p id ="error_log"></p>
   // <button id="logout">logout</button>
+  $('#guest_page').on("click",function(event){
+    console.log("gotoGuest")
+    if ($.cookie("session_id") != undefined){
+      console.log("session_idがあるので削除します")
+      $.removeCookie("session_id")}
+     $.cookie("session_id","test",{path:"/"})
+     location.href = "./homepage.html"
+  })
 
   $("#login").on("click", function(){
     console.log("test")

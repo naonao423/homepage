@@ -1,12 +1,16 @@
 'use strict';
 if (location.href.includes(127)){
 	console.log("ローカルパスです")
-	var loginurl = "http://127.0.0.1:8000/login"
-	var logouturl = "http://127.0.0.1:8000/logout"
-	var check_url = "http://127.0.0.1:8000/check"
+	// var loginurl = "http://127.0.0.1:8000/login"
+	// var logouturl = "http://127.0.0.1:8000/logout"
+	// var check_url = "http://127.0.0.1:8000/check"
 	// var root_url = "http://127.0.0.1:8000/"
 	// var root_url1 = "http://127.0.0.1:8000/"
-  var root_url ="https://0bapdngfga.execute-api.ap-northeast-1.amazonaws.com/api/"
+	var check_url = "https://n3njdz6puc.execute-api.ap-northeast-1.amazonaws.com/api/check"
+	var loginurl = "https://n3njdz6puc.execute-api.ap-northeast-1.amazonaws.com/api/login"
+	var logouturl ="https://n3njdz6puc.execute-api.ap-northeast-1.amazonaws.com/api/logout"
+  // var root_url ="https://0bapdngfga.execute-api.ap-northeast-1.amazonaws.com/api/"
+	var root_url ="https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/"
   var root_url1 ="https://9sgd4hb15a.execute-api.ap-northeast-1.amazonaws.com/api/"
 }
 else{

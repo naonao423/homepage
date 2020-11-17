@@ -18,34 +18,19 @@
     <script type="module" src="other-list/other-list.js"></script>
     <script type="text/javascript" src="own-function/login.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="own-function/common_append_html.js"></script>
     <script>
     detect()
     </script>
 
     <nav class="navbar navbar-expand-md navbar-light bg-dark fixed-top">
-    <a class="navbar-brand text-white" href="#">Homename</a>
+    <a class="navbar-brand text-white" href="#" id="web_title">Homename</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="homepage.html">Home<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="programing.html">Programming</a>
-          <li class="nav-item">
-            <a class="nav-link" href="Urls.html">Urls</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="donetable.html">Todos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="datas.html">Data</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="setting.html">Setting</a>
-          </li>
+        <ul class="navbar-nav mr-auto" id="navcontent">
         </ul>
       </div>
     </nav>
@@ -98,6 +83,7 @@
         <div class="col-12 col-md-5 o">
           <p id="summary">test</p>
           <p>test</p>
+          <button type=button id="ajax_test">test</button>
         </div>
       </div>
     </div>
@@ -106,6 +92,11 @@
 
   <script>
   // session_id確認
+  append_html_content()
+  $("#ajax_test").on('click',function(data){
+    chart.update()
+  })
+
 
   var localurls = root_url + "events/"
   // var localurls = "http://127.0.0.1:8000/events"
@@ -191,9 +182,9 @@
   $.ajax({
     'url': localurls +"reload" ,
     'type':"POST",
-  }).done(
-    chart.update()
-  )
+  }).done(function(data){
+    console.log("finish")
+  })
 
 
 
@@ -249,8 +240,8 @@
     // console.log(Object.keys(data))
     sublist = Object.keys(data)
     sublist.forEach(function(sub,i){
-      console.log(sub);
-      console.log(data[sub]);
+      // console.log(sub);
+      // console.log(data[sub]);
       time = data[sub].hour * 60 + data[sub].minute + data[sub].second / 60;
       // console.log(goaldata)
       time1 = time / goaldata[i]
@@ -267,7 +258,7 @@
 
   var start_date = beforeaweek
   var stop_date = today
-  var urls = "https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/events/summary/" + start_date + "/" +stop_date
+  var urls =  localurls + "summary/" + start_date + "/" +stop_date
   var dic = ""
   var data_value = []
   $.ajax({
@@ -293,10 +284,11 @@
     document.getElementById("summary").innerHTML = "ロード中"
   )
 
-
-
-
-
+  $('#logout').on('click',function(){
+    session_id = $.cookie("session_id")
+    $.removeCookie("session_id")
+    location.href = "/login.html"
+  })
   </script>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -10,15 +10,13 @@ H<!doctype html>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="own-function/login.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="own-function/login.js"></script>
+    <script type="text/javascript" src="own-function/common_append_html.js"></script>
+    <script type="text/javascript" src="utils.js"></script>
     <script>
     detect()
-    </script>
-    <script>
-    $("#logout").on("click",function(){
-      console.log("test")
-    })
     </script>
 
     <nav class="navbar navbar-expand-md navbar-light bg-dark fixed-top">
@@ -28,24 +26,7 @@ H<!doctype html>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link text-white" href="homepage.html">Home<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="programing.html">Programming</a>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="Urls.html">Urls</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="datas.html">Data</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="setting.html">Setting</a>
-        </li>
-        <li class="nav-item">
-          <button type="button" class="text-white nav-link btn btn-outline-danger" id="logout">Logout</button>
-        </li>
+      <ul class="navbar-nav mr-auto" id="navcontent">
       </ul>
     </div>
   </nav>
@@ -102,6 +83,15 @@ H<!doctype html>
       </div>
     </div>
   </main>
+  <script>
+  append_html_content()
+
+  $('#logout').on('click',function(){
+    session_id = $.cookie("session_id")
+    $.removeCookie("session_id")
+    location.href = "/login.html"
+  })
+  </script>
 
     <!-- Optional JavaScript -->
     <!--
