@@ -273,7 +273,13 @@
   var tag_list = []
   var tablelength = 0
   var base = ""
-  var urls  = root_url1 + "donetable/"
+  if ($.cookie("session_id") == "test"){
+    var urls  = root_url_te + "donetable"
+  }
+  else{
+    var urls  = root_url_my + "donetable"
+  }
+
   var taglist_unique = []
   var achivementratelist =[]
   var achivementratelist_only_parsent = []
@@ -462,9 +468,9 @@ else{
     // console.log(selected_data)
     if (!isNaN(done_number1) && done_number1 != 0){
     // console.log(done_number1)
-    urlss = root_url1 +`donetable/recoad/${tid_number}/${done_number1}`
+    urlssssss = urls +`/recoad/${tid_number}/${done_number1}`
     $.ajax({
-      "url":urlss,
+      "url":urlssssss,
       "type" :"PUT"
     }).done()
     inputdata = tid_get(tid_number,alldata)
@@ -480,7 +486,7 @@ else{
       }
     });
     console.log(done_number1)
-    urlss = root_url1 +`donetable/recoad/${tid_number}/${done_number1}`
+    urlss = urls +`/recoad/${tid_number}/${done_number1}`
     $.ajax({
       "url":urlss,
       "type" :"PUT"
@@ -564,7 +570,7 @@ else{
       }
       input_data['tags'] = _tag
 
-      var urls1 = root_url1 + `donetable/create/${table_name}/${table_length}/${table_column}`
+      var urls1 = urls + `/create/${table_name}/${table_length}/${table_column}`
       $.ajax({
         "url":urls1,
         "type":"POST",
@@ -710,9 +716,9 @@ else{
     file_to_send_backend['name'] =output_name
     console.log(file_to_send_backend)
 
-    urls = root_url1 + `donetable/changesetting/${tid_number}`
+    urlssss = urls + `/changesetting/${tid_number}`
     $.ajax({
-      "url":urls,
+      "url":urlssss,
       "type":"PUT",
       'contentType':'application/json',
       'data': JSON.stringify(file_to_send_backend),
@@ -746,9 +752,9 @@ var delete_sign = 0
     }
     else
     {
-      urls = root_url1 +  `donetable/delete/${tid_number}`
+      urlsss = urls +  `/delete/${tid_number}`
       $.ajax({
-        "url":urls,
+        "url":urlsss,
         "type":'DELETE',
     }).done().always(
       (function(){

@@ -9,6 +9,10 @@ function append_html_content(){
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="programing.html">Programming</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="about_me.html">About me</a>
+                </li>
                 <li class="nav-item">
                   <a class="nav-link" href="Urls.html">Urls</a>
                 </li>

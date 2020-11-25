@@ -22,6 +22,7 @@ function detect(){
     ret = data['user_id']
     guest(ret)
     return ret
+    test()
   }).fail(function(xhr, textStatus, errorThrown) {
         console.log("NG:" + textStatus.status);
         location.href = '/login.html'
