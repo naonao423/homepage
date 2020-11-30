@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- import module from cdn -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+</head>
+<body>
+  <h1>cookieのテストプログラム</h1>
+  <button type="button" id="test">push it!</button>
+  <button type="button" id="delete">delete!</button>
+  <p id="answer"></p>
+  <p>cookieは以下のような答えです</p>
+  <p id="cookies"></p>
+</body>
+<script>
+    var now = new Date()
+    var message = 'こんにちは！'　+ now
+    $.cookie('message',message)
+
+  $("#test").on("click",function(){
+    console.log("done!")
+    $('#answer').text("done!")
+    $('#cookies').text($.cookie('message'))
+   })
+
+  $("#delete").on("click",function(){
+    $.removeCookie('message')
+  })
+
+</script>
+</html>

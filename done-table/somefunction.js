@@ -267,6 +267,7 @@ function check_exist(data,tid){
 
 function recently_highright(data){
   data.forEach((item, i) => {
+    if (item['detail'].length >= 3){
     item['detail'].sort(function(a,b) {
     return (a.date < b.date ? 1 : -1);
     });
@@ -292,5 +293,8 @@ function recently_highright(data){
       "border": "10px solid",
           "border-color": "red"
     },200)
-  });
+  }
+    else{
+      a = 1
+    }});
 }
