@@ -1,0 +1,71 @@
+<html lang="ja">
+  <head>
+    <h5><br></h5>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="utils.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="own-function/login.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="own-function/common_append_html.js"></script>
+    <script>
+    result = detect()
+    </script>
+    <title id="top">nao's homepage</title>
+    <style media="screen">
+      body {position: relative;}
+    </style>
+  </head>
+  <body>
+    <body data-spy="scroll" data-target="#sidemenu-1" data-offset="10">
+
+    <div class="container mb-5">
+      <h1 class="h3 mb-4">Bootstrap4のスクロールスパイで作る、Qiita風サイドメニュー</h1>
+      <div class="row">
+        <div class="col-9">
+          <h4 id="menu-1">Item 1</h4>
+          <p class="mb-5"><br><br><br><br><br><br><br><br><br><br></p>
+          <h5 id="menu-1-1">Item 1-1</h5>
+          <p class="mb-5"><br><br><br><br><br><br><br><br><br><br><br></p>
+          <h5 id="menu-1-2">Item 1-2</h5>
+          <p class="mb-5"><br><br><br><br><br><br><br><br><br><br></p>
+          <h4 id="menu-2">Item 2</h4>
+          <p class="mb-5"><br><br><br><br><br><br><br><br><br><br></p>
+          <h4 id="menu-3">Item 3</h4>
+          <p class="mb-5"><br><br><br><br><br><br><br><br><br><br></p>
+          <h4 id="menu-4">Item 4</h4>
+          <p class="mb-5"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
+          <h4 id="menu-5">Item 5</h4>
+          <p class="mb-5">...</p>
+        </div>
+      <nav id="navbar-example3" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="col-3">
+          <ul id="sidemenu-1" class="nav nav-pills flex-column sticky-top">
+            <li class="nav-item">
+              <a href="#menu-1" class="nav-link">Menu1</a>
+              <ul id="sidemenu-1" class="nav nav-pills flex-column pl-3">
+                <li class="nav-item"><a href="#menu-1-1" class="nav-link">Menu1-1</a></li>
+                <li class="nav-item"><a href="#menu-1-2" class="nav-link">Menu1-2</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a href="#menu-2" class="nav-link">Menu2</a></li>
+            <li class="nav-item"><a href="#menu-3" class="nav-link">Menu3</a></li>
+            <li class="nav-item"><a href="#menu-4" class="nav-link">Menu4</a></li>
+            <li class="nav-item"><a href="#menu-5" class="nav-link">Menu5</a></li>
+          </ul>
+        </div>
+      </nav>
+      </div>
+    </div>
+  </body>
+  </html>
