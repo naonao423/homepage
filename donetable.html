@@ -262,6 +262,10 @@
 
 
   <script>
+  //
+  function test(){
+    console.log("test_done")
+  }
   append_html_content()
   // ここで大枠のタイトルを取得
   var alldata = []
@@ -294,6 +298,7 @@
       show_the_achivement(alldata)
       show_achivement_bar(tidlist,achivementratelist)
       recently_highright(alldata)
+      create_menu(alldata)
   }
 );
 
@@ -354,7 +359,7 @@ for (var i=0;  i<=tablelength-1; i++){
   insertbase += '<table class="table table-bordered">'+'<tbody>'
 
   if (Object.keys(rowdesplay_list[i]).includes("L")){
-    console.log(rowdesplay_list[i])
+    // console.log(rowdesplay_list[i])
   for (var j=1; j<=trrow+1; j++){
     insertbase += '<tr>'
     if (j != trrow+1){
@@ -390,6 +395,12 @@ for (var i=0;  i<=tablelength-1; i++){
         '</div>'+
         '<div  class="col-lg-8 col-sm-6 col-5">'+
         '<div class="input-group">'+
+        `<div class="input-group-prepend">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+          <div class="dropdown-menu" id="menu-${tidlist[i]}">
+
+            </div>
+          </div>`+
         `<input type="text" class="form-control" placeholder="input done parameter" aria-label="Recipients username" aria-describedby="basic-addon2" id="inputdone-${tidlist[i]}">`+
           '<div class="input-group-append">'+
             `<button class="btn btn-outline-secondary" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#registerModal">Done!</button>`+
@@ -434,6 +445,16 @@ else{
         '</div>'+
         '<div  class="col-lg-8 col-sm-6 col-5">'+
         '<div class="input-group">'+
+        `<div class="input-group-prepend">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+          <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            <div role="separator" class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Separated link</a>
+            </div>
+          </div>`+
         `<input type="text" class="form-control" placeholder="input done parameter" aria-label="Recipients username" aria-describedby="basic-addon2" id="inputdone-${tidlist[i]}">`+
           '<div class="input-group-append">'+
             `<button class="btn btn-outline-secondary" type="button" id="register-${tidlist[i]}" data-toggle="modal" data-target="#registerModal">Done!</button>`+

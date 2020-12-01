@@ -94,7 +94,25 @@ function ramdom_from_done(tid,data){
   }
 }
 }
+// monuの選択肢を表示する関数
+function create_menu(data){
+  data.forEach((item, i) => {
+    var all_len = item['len']
+    var tid = item['tid']
+    console.log(all_len)
+    console.log(tid)
+    for (let i=1; i<=all_len; i++){
+      append_part = `<a class="dropdown-item" onclick=put_number_to_input(${tid},${i})>${i}</a>`
+      $("#main_tablepart").find("#"+`menu-${tid}`).append(append_part)
+    }
+  })
+}
 
+function put_number_to_input(tid,number){
+  console.log(tid,number)
+  $("#main_tablepart").find("#"+`inputdone-${tid}`).val(number)
+  console.log("test_done")
+}
 
 // こっちはタイルにある色を変化する変数
 function show_the_achivement(data){
@@ -278,9 +296,6 @@ function recently_highright(data){
     change_font_color0 = `segment-${item['tid']}-${resently_list[0]}`
     change_font_color1 = `segment-${item['tid']}-${resently_list[1]}`
     change_font_color2 = `segment-${item['tid']}-${resently_list[2]}`
-    console.log(change_font_color0)
-    console.log(change_font_color1)
-    console.log(change_font_color2)
     $("#main_tablepart").find("#"+change_font_color0).animate({
       "border": "solid 3px",
         "border-color": "green"
