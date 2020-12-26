@@ -32,6 +32,8 @@
     <div class="container mb-5">
       <h1 class="h3 mb-4">Bootstrap4のスクロールスパイで作る、Qiita風サイドメニュー</h1>
       <div class="row">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mt-5">
+        <div class="container" id="top">
         <div class="col-9">
           <h4 id="menu-1">Item 1</h4>
           <p class="mb-5"><br><br><br><br><br><br><br><br><br><br></p>
@@ -48,6 +50,9 @@
           <h4 id="menu-5">Item 5</h4>
           <p class="mb-5">...</p>
         </div>
+      </div>
+     </main>
+
       <nav id="navbar-example3" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
         <div class="col-3">
           <ul id="sidemenu-1" class="nav nav-pills flex-column sticky-top">
@@ -67,5 +72,11 @@
       </nav>
       </div>
     </div>
+    <script>
+      var tests = "abcdefghij"
+      console.log(tests.startsWith("abc"))
+      console.log(tests.startsWith("abcd"))
+      console.log(tests.startsWith("bc"))
+    </script>
   </body>
   </html>

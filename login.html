@@ -39,8 +39,6 @@
 
 
 <script>
-
-
   // <label for="user_id">id</label>
   // <input type="text" id ="user_id">
   // <br>
@@ -49,6 +47,14 @@
   // <button id="login">login</button>
   // <p id ="error_log"></p>
   // <button id="logout">logout</button>
+
+  //  enter押したときsubmitをするようにする
+  $('#password').keypress(function(e){
+      if(e.keyCode==13){
+      $('#login').click();
+    };
+  });
+
   $('#guest_page').on("click",function(event){
     console.log("gotoGuest")
     if ($.cookie("session_id") != undefined){
@@ -86,7 +92,9 @@
       $("#error_log").text("idかpasswordを間違えています")
     }
     else{
-      $.cookie("session_id",data['session_id'],{path:"/"});
+      date = new Date();
+      date.setTime( date.getTime() + (1000 * 60 * 60 * 24 * 365));
+      $.cookie("session_id",data['session_id'],{path:"/"},{expires:date});
       location.href = "./homepage.html"
     }
   }).fail(function(jqXHR, textStatus, errorThrown){

@@ -92,7 +92,8 @@
 
   <script>
   // html要素の追加
-  append_html_content()
+  var session_id = $.cookie("session_id")
+  append_html_content(session_id)
 
   // session_id確認
   $('#ajax_test').on("click",function(event){
@@ -325,7 +326,7 @@
     $('#logout').on('click',function(){
       session_id = $.cookie("session_id")
       $.removeCookie("session_id")
-      location.href = "/login.html"
+      location.href = "./login.html"
     })
   }
 

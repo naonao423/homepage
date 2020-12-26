@@ -16,7 +16,7 @@ H<!doctype html>
     <script type="text/javascript" src="own-function/common_append_html.js"></script>
     <script type="text/javascript" src="utils.js"></script>
     <script>
-    detect()
+    detect_only_me()
     </script>
 
     <nav class="navbar navbar-expand-md navbar-light bg-dark fixed-top">
@@ -69,7 +69,7 @@ H<!doctype html>
   $('#logout').on('click',function(){
     session_id = $.cookie("session_id")
     $.removeCookie("session_id")
-    location.href = "/login.html"
+    location.href = "./login.html"
   })
   </script>
 

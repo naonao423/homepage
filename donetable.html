@@ -183,9 +183,9 @@
                     <td id="seven_time">red</td>
                   </tr>
                 </table>
-                <button type="button" id="jsontest">test</button>
               </li>
             </ul>
+            <h5 class="fluid" style="padding-left:10px">url:https://~[title]</h5>
           </div>
         </nav>
       </div>
@@ -365,6 +365,12 @@ for (var i=0;  i<=tablelength-1; i++){
     if (j != trrow+1){
       for (var k=(j-1)*graphrow_list[i]+1; k<=j*graphrow_list[i]; k++){
         ks = rowdesplay_list[i]['L'][k-1]
+        if (ks.startsWith("http")){
+          if(ks.endsWith("]")){
+            ks = `<a href="${ks.split("[")[0]}">${ks.split("[")[1].split("]")[0]}</a>`
+          }else{
+        ks = `<a href="${ks}">${ks}</a>`
+      }}
         var segment_table = `<td class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${ks}</td>`
         insertbase += segment_table
       }
@@ -372,6 +378,12 @@ for (var i=0;  i<=tablelength-1; i++){
     else{
       for (var k=(j-1)*graphrow_list[i]+1; k<=lenlist[i]; k++){
         ks = rowdesplay_list[i]['L'][k-1]
+        if (ks.startsWith("http")){
+          if(ks.endsWith("]")){
+            ks = `<a href="${ks.split("[")[0]}">${ks.split("[")[1].split("]")[0]}</a>`
+          }else{
+        ks = `<a href="${ks}">${ks}</a>`
+      }}
         var segment_table = `<td  class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${ks}</td>`
         insertbase += segment_table
       }
@@ -416,12 +428,24 @@ else{
     insertbase += '<tr>'
     if (j != trrow+1){
       for (var k=(j-1)*graphrow_list[i]+1; k<=j*graphrow_list[i]; k++){
+        if (String(k).startsWith("http")){
+          if(k.endsWith("]")){
+            k = `<a href="${k.split("[")[0]}">${k.split("[")[1].split("]")[0]}</a>`
+          }else{
+        k = `<a href="${k}">${k}</a>`
+      }}
         var segment_table = `<td class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${k}</td>`
         insertbase += segment_table
       }
     }
     else{
       for (var k=(j-1)*graphrow_list[i]+1; k<=lenlist[i]; k++){
+        if (String(k).startsWith("http")){
+          if(k.endsWith("]")){
+            k = `<a href="${k.split("[")[0]}">${k.split("[")[1].split("]")[0]}</a>`
+          }else{
+        k = `<a href="${k}">${k}</a>`
+      }}
         var segment_table = `<td  class="td-${tidlist[i]}" align="center" id=segment-${tidlist[i]}-${k}>${k}</td>`
         insertbase += segment_table
       }
@@ -635,11 +659,15 @@ else{
       if (j != trrow+1){
         for (var k=(j-1)*selected_data['graphrow']+1; k<=j*selected_data['graphrow']; k++){
           var setting_index = `segment-${tid_number}-${k}`
-
           kss = $("#"+setting_index).text()
-          console.log(kss)
+          url_ss = $("#"+setting_index).find("a").attr('href');
+          if (url_ss != undefined){
+            var segment_table = `<td class="td-${selected_data['tid']}" align="center" id=setting-segment-${selected_data['tid']}-${k}>`+
+            `<input type="text" style="width:100%" id=setting-input-${tid_number}-${k} value="${url_ss}[${kss}]" />`+"</td>"
+          }else{
           var segment_table = `<td class="td-${selected_data['tid']}" align="center" id=setting-segment-${selected_data['tid']}-${k}>`+
-          `<input type="text" style="width:40px" id=setting-input-${tid_number}-${k} value="${kss}" />`+"</td>"
+          `<input type="text" style="width:100%" id=setting-input-${tid_number}-${k} value="${kss}" />`+"</td>"
+        }
           insertbase += segment_table
         }
       }
@@ -647,8 +675,14 @@ else{
         for (var k=(j-1)*selected_data['graphrow']+1; k<=selected_data['len']; k++){
           var setting_index = `segment-${tid_number}-${k}`
           kss = $("#"+setting_index).text()
-          var segment_table = `<td  class="td-${selected_data['tid']}" align="center" id=setting-segment-${selected_data['tid']}-${k}>`+
-          `<input type="text" style="width:40px" id=setting-input-${tid_number}-${k} value="${kss}"/>`+"</td>"
+          url_ss = $("#"+setting_index).find("a").attr('href');
+          if (url_ss != undefined){
+            var segment_table = `<td class="td-${selected_data['tid']}" align="center" id=setting-segment-${selected_data['tid']}-${k}>`+
+            `<input type="text" style="width:100%" id=setting-input-${tid_number}-${k} value="${url_ss}[${kss}]" />`+"</td>"
+          }else{
+          var segment_table = `<td class="td-${selected_data['tid']}" align="center" id=setting-segment-${selected_data['tid']}-${k}>`+
+          `<input type="text" style="width:100%" id=setting-input-${tid_number}-${k} value="${kss}" />`+"</td>"
+        }
           insertbase += segment_table
         }
       }
@@ -810,7 +844,7 @@ var delete_sign = 0
   $('#logout').on('click',function(){
     session_id = $.cookie("session_id")
     $.removeCookie("session_id")
-    location.href = "/login.html"
+    location.href = "./login.html"
   })
   </script>
 

@@ -5,7 +5,6 @@ H<!doctype html>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
@@ -23,7 +22,7 @@ H<!doctype html>
     </script>
     <nav class="navbar navbar-expand-md navbar-light bg-dark fixed-top">
     <a class="navbar-brand text-white" href="#" id="web_title">Homename</a>
-    <button class="navbar-toggler" type="button" da</nav>ta-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -33,60 +32,91 @@ H<!doctype html>
     </div>
     </nav>
     <title id="top">nao's homepage</title>
+    <style type="text/css">
+    .container{
+      padding-top:100px;
+      margin-top:-100px
+    }
+    h5{
+      padding-left:50px;
+    }
+  </style>
   </head>
-  <body>
-    <div class="container-fluid">
-      <div class="row">
-        <nav id="navbar-example3" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-          <div class="sidebar-sticky px-2">
-            <a class="navbar-brand" href="#" style="padding:20px">Contents</a>
-            <nav class="nav nav-pills flex-column">
-              <a class="nav-link" href="#item-1">Item 1</a>
-              <nav class="nav nav-pills flex-column">
-                <a class="nav-link ml-3 my-1" href="#item-1-1">Item 1-1</a>
-                <a class="nav-link ml-3 my-1" href="#item-1-2">Item 1-2</a>
-              </nav>
-              <a class="nav-link" href="#item-2">Item 2</a>
-              <a class="nav-link" href="#item-3">Item 3</a>
-              <nav class="nav nav-pills flex-column">
-                <a class="nav-link ml-3 my-1" href="#item-3-1">Item 3-1</a>
-                <a class="nav-link ml-3 my-1" href="#item-3-2">Item 3-2</a>
-              </nav>
-            </nav>
-          </div>
-        </nav>
+  <body data-spy="scroll" data-target="#sidemenu-1" data-offset="80">
+
+<main role="main" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mt-5">
+  <div class="container mb-5" >
+    <h1 class="h3 mb-4" style="padding-top:100px;">自分の経歴。</h1>
+    <div class="row" >
+      <div class="container" id="top">
+        <h4 id="menu-1">研究室</h4>
+        <p class="mb-5">  研究内容としては、主にアンモニアを代替燃料とした船舶エンジンでの燃焼について燃焼の様子の撮影、排ガスの分析を行っています。
+          実験装置は私の所属している研究室のホームページに画像があります。<a href="http://takaken.ence.kyushu-u.ac.jp/top_page_Japanese.htm">熱機関工学研究室</a>
+        </p>
+        <h5 id="menu-1-1">Surcm</h5>
+        <p class="mb-5"><br><br><br><br><br><br><br><br><br><br><br></p>
+        <h5 id="menu-1-2">CVCC</h5>
+        <p class="mb-5"><br><br><br><br><br><br><br><br><br><br></p>
+        <h4 id="menu-2">プログラミング</h4>
+        <p class="mb-5"><br><br><br><br><br><br><br><br><br><br></p>
+        <h5 id="menu-2-1">Item 3</h4>
+        <p class="mb-5"><br><br><br><br><br><br><br><br><br><br></p>
+        <h5 id="menu-2-2">Item 4</h4>
+        <p class="mb-5"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
+        <h5 id="menu-2-3">Item 5</h4>
+        <p class="mb-5">...</p>
+        <h5 id="menu-2-4">Item 5</h4>
+        <p class="mb-5">...</p>
       </div>
     </div>
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mt-5">
-      <div class="container" id="top">
-        <div data-spy="scroll" data-target="#navbar-example3" data-offset="0">
-          <h4 id="item-1">研究内容</h4>
-          <p>
-            研究内容としては、主にアンモニアを代替燃料とした船舶エンジンでの燃焼について燃焼の様子の撮影、排ガスの分析を行っています。
-            実験装置は私の所属している研究室のホームページに画像があります。<a href="http://takaken.ence.kyushu-u.ac.jp/top_page_Japanese.htm">熱機関工学研究室</a>
-
-          </p>
-          <h5 id="item-1-1">Item 1-1</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <h5 id="item-1-2">Item 1-2</h5>
-          <p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
-          <h4 id="item-2">Item 2</h4>
-          <p>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-          </p>
-          <h4 id="item-3">Item 3</h4>
-          <p>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-          </p>
-          <h5 id="item-3-1">Item 3-1</h5>
-          <p>...</p>
-          <h5 id="item-3-2">Item 3-2</h5>
-          <p>...</p>
-        </div>
-      </div>
-    </main>
+  </div>
+</main>
+    <nav id="navbar-example3" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="sidebar-sticky px-2">
+        <ul id="sidemenu-1" class="nav nav-pills flex-column sticky-top">
+          <a class="navbar-brand" href="#" style="padding:20px">Contents</a>
+          <li class="nav-item">
+            <a href="#menu-1" class="nav-link">Menu1</a>
+            <ul id="sidemenu-1" class="nav nav-pills flex-column pl-3">
+              <li class="nav-item"><a href="#menu-1-1" class="nav-link">Menu1-1</a></li>
+              <li class="nav-item"><a href="#menu-1-2" class="nav-link">Menu1-2</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#menu-2" class="nav-link">Menu1</a>
+            <ul id="sidemenu-1" class="nav nav-pills flex-column pl-3">
+              <li class="nav-item"><a href="#menu-2-1" class="nav-link">Menu2</a></li>
+              <li class="nav-item"><a href="#menu-2-2" class="nav-link">Menu3</a></li>
+              <li class="nav-item"><a href="#menu-2-3" class="nav-link">Menu4</a></li>
+              <li class="nav-item"><a href="#menu-2-4 class="nav-link">Menu5</a></li>
+            </ul>
+          </li>
+        </ul>
+    </nav>
+    </div>
+  </div>
+  </div>
+</body>
     <script>
+    jQuery(function(){
+        var windowWidth = $(window).width();
+        var headerHight = 80;
+        jQuery('a[href^=\\#]').click(function() {
+        var speed = 100;
+        var href= jQuery(this).attr("href");
+        console.log(href)
+        var target = jQuery(href == "#" || href == "" ? 'html' : href);
+        var position = target.offset().top-headerHight;
+        jQuery('body,html').animate({scrollTop:position}, speed, 'swing');
+        return false
+       });
+    });
     append_html_content()
+    $('#logout').on('click',function(){
+      session_id = $.cookie("session_id")
+      $.removeCookie("session_id")
+      location.href = "./login.html"
+    })
     </script>
   </body>
 </html>
