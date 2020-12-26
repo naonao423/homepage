@@ -11,7 +11,7 @@ if (location.href.includes(127)){
 	var logouturl ="https://n3njdz6puc.execute-api.ap-northeast-1.amazonaws.com/api/logout"
   // var root_url ="https://0bapdngfga.execute-api.ap-northeast-1.amazonaws.com/api/"
 	var root_url ="https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/"
-  var root_url_te ="https://9sgd4hb15a.execute-api.ap-northeast-1.amazonaws.com/api/"
+  var root_url_te ="https://78kn9l1j8j.execute-api.ap-northeast-1.amazonaws.com/api/"
 	var root_url_my ="https://qvk1i2a0k2.execute-api.ap-northeast-1.amazonaws.com/api/"
 }
 else{
@@ -20,7 +20,7 @@ else{
 	var loginurl = "https://n3njdz6puc.execute-api.ap-northeast-1.amazonaws.com/api/login"
 	var logouturl ="https://n3njdz6puc.execute-api.ap-northeast-1.amazonaws.com/api/logout"
 	var root_url ="https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/"
-	var root_url_te ="https://9sgd4hb15a.execute-api.ap-northeast-1.amazonaws.com/api/"
+	var root_url_te ="https://78kn9l1j8j.execute-api.ap-northeast-1.amazonaws.com/api/"
 	var root_url_my ="https://qvk1i2a0k2.execute-api.ap-northeast-1.amazonaws.com/api/"
 }
 

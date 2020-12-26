@@ -185,7 +185,8 @@
                 </table>
               </li>
             </ul>
-            <h5 class="fluid" style="padding-left:10px">url:https://~[title]</h5>
+            <h5 class="fluid" style="padding-left:50px">https://~[title]</h5>
+            <h5>と打てばリンクにできます。</h5>
           </div>
         </nav>
       </div>
@@ -283,7 +284,7 @@
   else{
     var urls  = root_url_my + "donetable"
   }
-
+  console.log(urls)
   var taglist_unique = []
   var achivementratelist =[]
   var achivementratelist_only_parsent = []
@@ -365,6 +366,7 @@ for (var i=0;  i<=tablelength-1; i++){
     if (j != trrow+1){
       for (var k=(j-1)*graphrow_list[i]+1; k<=j*graphrow_list[i]; k++){
         ks = rowdesplay_list[i]['L'][k-1]
+        console.log(ks)
         if (ks.startsWith("http")){
           if(ks.endsWith("]")){
             ks = `<a href="${ks.split("[")[0]}">${ks.split("[")[1].split("]")[0]}</a>`
