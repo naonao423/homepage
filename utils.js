@@ -13,6 +13,7 @@ if (location.href.includes(127)){
 	var root_url ="https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/"
   var root_url_te ="https://78kn9l1j8j.execute-api.ap-northeast-1.amazonaws.com/api/"
 	var root_url_my ="https://qvk1i2a0k2.execute-api.ap-northeast-1.amazonaws.com/api/"
+	var root_task = "https://cy99p183rl.execute-api.ap-northeast-1.amazonaws.com/api/"
 }
 else{
 	console.log("外部ののパスです")
@@ -22,6 +23,7 @@ else{
 	var root_url ="https://yd84omt2rd.execute-api.ap-northeast-1.amazonaws.com/api/"
 	var root_url_te ="https://78kn9l1j8j.execute-api.ap-northeast-1.amazonaws.com/api/"
 	var root_url_my ="https://qvk1i2a0k2.execute-api.ap-northeast-1.amazonaws.com/api/"
+	var root_task = "https://cy99p183rl.execute-api.ap-northeast-1.amazonaws.com/api/"
 }
 
 

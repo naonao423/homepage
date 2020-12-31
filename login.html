@@ -23,6 +23,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
 </head>
+
 <body>
   <form>
     <h1><span>My</span> page</h1>
@@ -94,7 +95,7 @@
     else{
       date = new Date();
       date.setTime( date.getTime() + (1000 * 60 * 60 * 24 * 365));
-      $.cookie("session_id",data['session_id'],{path:"/"},{expires:date});
+      $.cookie("session_id",data['session_id'],{path:"/",expires:date});
       location.href = "./homepage.html"
     }
   }).fail(function(jqXHR, textStatus, errorThrown){
