@@ -20,6 +20,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="own-function/common_append_html.js"></script>
+    <link rel="stylesheet" href="css/apexcharts.css">
+    <script src="css/apexcharts.js"></script>
     <script>
     ret = detect()
     </script>
@@ -69,6 +71,9 @@
             </p>
           </div>
         </div>
+        <div class="col-11 o" id="chart_attend">
+
+        </div>
         <div class="col-12 col-md-6 o" id="table-title">
           <table class="table table-hover">
             <thead>
@@ -85,7 +90,7 @@
         <div class="col-12 col-md-5 o">
           <p id="summary">test</p>
           <p>test</p>
-          <button type=button id="ajax_test">test</button>
+          <button type=button id="ajax_test">reload</button>
         </div>
       </div>
     </div>
@@ -100,7 +105,7 @@
   // session_id確認
   $('#ajax_test').on("click",function(event){
     console.log("test")
-    console.log(ret)
+    reload(localurls)
   })
 
   function test(){
@@ -112,6 +117,7 @@
   // var localurls = "http://127.0.0.1:8000/events"
   var today = moment().format('YYYY-MM-DD');
   var beforeaweek = moment().add(-7,"d").format("YYYY-MM-DD");
+  var beforeaweeks = moment().add(-31,"d").format("YYYY-MM-DD");
   $("#input_data_start").val(beforeaweek)
   $("#input_data_stop").val(today)
   var presets = window.chartColors;
@@ -190,12 +196,12 @@
     setsub(localurls)
     setgoal(localurls)
     summary(localurls)
-    reload(localurls)
-    loadScript("other-list/other-list.js")
+    otherlist(localurls)
+    // loadScript("other-list/other-list.js")
   }
 
 
-    function setsub(localurls){
+  function setsub(localurls){
     $.ajax({
       'url':localurls + "setsub" ,
       'type':"get",
@@ -214,6 +220,24 @@
       // console.log(data)
       goaldata = data
       chart.update()
+    })
+  }
+
+  function otherlist(localurls){
+    var start_date = beforeaweeks
+    var stop_date = today
+    var start =document.querySelector('#input_data_start')
+    var start_date = start.value
+    var stop =document.querySelector('#input_data_stop')
+    var stop_date = stop.value
+    var urls = localurls + "summary/" + start_date + "/" +stop_date
+    $.ajax({
+      'url':localurls + "otherlists/" + start_date + "/" +stop_date,
+      'type':"get",
+    }).done(function(data){
+      // console.log(data)
+      console.log(start_date,stop_date,data)
+      attend_data(start_date,stop_date,data)
     })
   }
 
@@ -385,6 +409,127 @@
     return values;
   }
 
+
+
+
+  function attend_data(start,stop,data){
+      function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+          day = '' + d.getDate(),
+          year = d.getFullYear();
+
+      if (month.length < 2)
+          month = '0' + month;
+      if (day.length < 2)
+          day = '0' + day;
+
+      return [year, month, day].join('-');
+    }
+
+    data_attend = {}
+
+    Lab = []
+    Exp = []
+    Home = []
+    Out = []
+    start_date = new Date(start);
+    stop_date = new Date(stop);
+    days = ((stop_date - start_date)/(1000*3600*24))
+    for (let i = 0; i < days+1; ++i){
+      tomorrow = new Date(start)
+      day = formatDate(tomorrow.setDate(start_date.getDate() + i))
+      data_attend["Lab"] = 0
+      data_attend["Exp"] = 0
+      data_attend["Home"] = 0
+      data_attend["Out"] = 0
+      data.forEach((item, j) => {
+        if (item['begin_date'] == day){
+          if (item["sub"] == "Lab" || item["sub"] == "Exp" || item["sub"] == "Home" || item["sub"] == "Out" || item["sub"] == "out"){
+            hour = item["duration"].split(":")[0]
+            minute = item["duration"].split(":")[1]
+            second = item["duration"].split(":")[2]
+            data_attend[item["sub"]] += parseFloat(hour) + parseFloat(minute/60) + parseFloat(second/3600)
+            if (item["sub"] == "out"){
+              data_attend["Out"] += parseFloat(hour) + parseFloat(minute/60) + parseFloat(second/3600)
+            }
+          }
+        }
+      });
+      Lab.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Lab"]])
+      Exp.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Exp"]])
+      Home.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Home"]])
+      Out.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Out"]])
+    }
+    console.log(Lab)
+
+    function generateDayWiseTimeSeries(baseval, count, yrange) {
+     var i = 0;
+     var series = [];
+     while (i < count) {
+       var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+
+       series.push([baseval, y]);
+       baseval += 86400000;
+       i++;
+     }
+       return series;
+     }
+    var options = {
+      series: [
+      {
+        name: 'Lab',
+        data: Lab
+      },
+      {
+        name: 'Exp',
+        data: Exp
+      },
+      {
+        name: 'Home',
+        data: Home
+      },
+      {
+        name: 'Out',
+        data: Out
+      }
+    ],
+      chart: {
+      type: 'area',
+      height: 350,
+      stacked: true,
+      events: {
+        selection: function (chart, e) {
+          console.log(new Date(e.xaxis.min))
+        }
+      },
+    },
+    colors: ['#008FFB', '#00E396', '#CED4DC', '#c0ff25'],
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: 'smooth'
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        opacityFrom: 0.6,
+        opacityTo: 0.8,
+      }
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'left'
+    },
+    xaxis: {
+      type: 'datetime'
+    },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart_attend"), options);
+    chart.render();
+  }
   </script>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

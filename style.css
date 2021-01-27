@@ -6,7 +6,9 @@
 .col-xl-
 */
 
-
+#chart svg {
+  height: 400px;
+}
 li {
     display: list-item;
     text-align: -webkit-match-parent;
