@@ -237,13 +237,14 @@
     }).done(function(data){
       // console.log(data)
       console.log(start_date,stop_date,data)
+      console.log(localurls + "otherlists/" + start_date + "/" +stop_date)
       attend_data(start_date,stop_date,data)
     })
   }
 
   function reload(localurls){
     $.ajax({
-      'url': localurls +"reload" ,
+      'url': localurls +"update" ,
       'type':"POST",
     }).done(function(data){
       console.log("finish")
@@ -433,33 +434,83 @@
     Exp = []
     Home = []
     Out = []
+    ex_data_attend = {}
+    ex_data_attend["Lab"] = 0
+    ex_data_attend["Exp"] = 0
+    ex_data_attend["Home"] = 0
+    ex_data_attend["Out"] = 0
     start_date = new Date(start);
     stop_date = new Date(stop);
     days = ((stop_date - start_date)/(1000*3600*24))
     for (let i = 0; i < days+1; ++i){
       tomorrow = new Date(start)
       day = formatDate(tomorrow.setDate(start_date.getDate() + i))
-      data_attend["Lab"] = 0
-      data_attend["Exp"] = 0
-      data_attend["Home"] = 0
-      data_attend["Out"] = 0
+      console.log(ex_data_attend)
+      data_attend["Lab"] = ex_data_attend["Lab"]
+      data_attend["Exp"] = ex_data_attend["Exp"]
+      data_attend["Home"] = ex_data_attend["Home"]
+      data_attend["Out"] =  ex_data_attend["Out"]
+      ex_data_attend["Lab"] = 0
+      ex_data_attend["Exp"] = 0
+      ex_data_attend["Home"] = 0
+      ex_data_attend["Out"] = 0
       data.forEach((item, j) => {
         if (item['begin_date'] == day){
+          sum_second = 0;
+          sum_munite = 0;
+          sum_hour = 0;
           if (item["sub"] == "Lab" || item["sub"] == "Exp" || item["sub"] == "Home" || item["sub"] == "Out" || item["sub"] == "out"){
-            hour = item["duration"].split(":")[0]
-            minute = item["duration"].split(":")[1]
-            second = item["duration"].split(":")[2]
-            data_attend[item["sub"]] += parseFloat(hour) + parseFloat(minute/60) + parseFloat(second/3600)
+            // 繰り上がるかの判定
+            begin_hour = parseInt(item["begin_time"].split(":")[0])
+            begin_munite = parseInt(item["begin_time"].split(":")[1])
+            begin_second = parseInt(item["begin_time"].split(":")[2])
+            hour = parseInt(item["duration"].split(":")[0])
+            minute = parseInt(item["duration"].split(":")[1])
+            second = parseInt(item["duration"].split(":")[2])
+            // 繰り上がりの計算
+            if (begin_second + second >= 60){
+              sum_second = begin_second + second -60
+              sum_munite = 1;
+            }else{
+              sum_second = begin_second + second
+            }
+            if (sum_munite + begin_munite + minute >= 60){
+              sum_munite = sum_munite + begin_munite + minute - 60
+              sum_hour = 1
+            }else{
+              sum_munite = sum_munite + begin_munite + minute
+            }
+            sum_hour = sum_hour + begin_hour + hour;
+            console.log(sum_hour,sum_munite,sum_second)
+
+            // 分裂
+            if ( sum_hour >= 24 || (sum_hour == 24 && sum_munite > 0) || (sum_hour == 24 && sum_munite == 0 && sum_second > 0)){
+              console.log("pass")
+              over_hour = sum_hour - 24;
+              over_munite = sum_munite;
+              over_second = sum_second;
+              hour = 23 - begin_hour;
+              minute = 60 - begin_munite
+              second = 60 - begin_second;
+              if (item["sub"] == "out"){
+                ex_data_attend["Out"] += parseFloat(over_hour) + parseFloat(over_munite/60) + parseFloat(over_second/3600)
+              }else{
+              ex_data_attend[item["sub"]] += parseFloat(over_hour) + parseFloat(over_munite/60) + parseFloat(over_second/3600)
+              }
+            }
             if (item["sub"] == "out"){
               data_attend["Out"] += parseFloat(hour) + parseFloat(minute/60) + parseFloat(second/3600)
+            }
+            else{
+              data_attend[item["sub"]] += parseFloat(hour) + parseFloat(minute/60) + parseFloat(second/3600)
             }
           }
         }
       });
-      Lab.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Lab"]])
-      Exp.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Exp"]])
-      Home.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Home"]])
-      Out.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Out"]])
+      Lab.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Lab"].toFixed(2)])
+      Exp.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Exp"].toFixed(2)])
+      Home.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Home"].toFixed(2)])
+      Out.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Out"].toFixed(2)])
     }
     console.log(Lab)
 
