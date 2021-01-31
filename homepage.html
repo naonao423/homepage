@@ -49,6 +49,7 @@
                 <br>
                 <input type="date" id="input_data_stop" value="2020-09-06">
                 <br>
+                <p id="now_place"></p>
               </li>
             </ul>
           </div>
@@ -190,7 +191,13 @@
     setgoal(localurls)
     reload(localurls)
     // summary(localurls)
-
+    $.ajax({
+      'url':"https://znquzl6dk7.execute-api.ap-northeast-1.amazonaws.com/api/track/check",
+      'type':"GET",
+    }).done(function(data){
+      today_data = data
+      $("#now_place").text(today_data["name"])
+    })
   }
   else {
     setsub(localurls)
@@ -237,6 +244,7 @@
       'type':"GET",
     }).done(function(data){
       today_data = data
+      $("#now_place").text(today_data["name"])
       console.log(today_data)
       $.ajax({
         'url':localurls + "otherlists/" + start_date + "/" +stop_date,
