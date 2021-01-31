@@ -244,7 +244,11 @@
       'type':"GET",
     }).done(function(data){
       today_data = data
+      if ( today_data["name"] == "Home"){
       $("#now_place").text(today_data["name"])
+    }else{
+      $("#now_place").text("Out")
+    }
       console.log(today_data)
       $.ajax({
         'url':localurls + "otherlists/" + start_date + "/" +stop_date,
