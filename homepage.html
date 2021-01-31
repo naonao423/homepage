@@ -71,10 +71,10 @@
             </p>
           </div>
         </div>
-        <div class="col-11 o" id="chart_attend">
+        <div class="col-md-11 o" id="chart_attend">
 
         </div>
-        <div class="col-12 col-md-6 o" id="table-title">
+        <div class="col-12 col-md-6" id="table-title">
           <table class="table table-hover">
             <thead>
               <th scope="col">日付</th>
@@ -189,7 +189,7 @@
     setsub(localurls)
     setgoal(localurls)
     reload(localurls)
-    summary(localurls)
+    // summary(localurls)
 
   }
   else {
@@ -223,23 +223,32 @@
     })
   }
 
+
   function otherlist(localurls){
     var start_date = beforeaweeks
     var stop_date = today
     var start =document.querySelector('#input_data_start')
-    var start_date = start.value
+    var start_date = moment(start.value).add(-7,"d").format("YYYY-MM-DD")
     var stop =document.querySelector('#input_data_stop')
     var stop_date = stop.value
     var urls = localurls + "summary/" + start_date + "/" +stop_date
     $.ajax({
-      'url':localurls + "otherlists/" + start_date + "/" +stop_date,
-      'type':"get",
+      'url':"https://znquzl6dk7.execute-api.ap-northeast-1.amazonaws.com/api/track/check",
+      'type':"GET",
     }).done(function(data){
-      // console.log(data)
-      console.log(start_date,stop_date,data)
-      console.log(localurls + "otherlists/" + start_date + "/" +stop_date)
-      attend_data(start_date,stop_date,data)
-    })
+      today_data = data
+      console.log(today_data)
+      $.ajax({
+        'url':localurls + "otherlists/" + start_date + "/" +stop_date,
+        'type':"get",
+      }).done(function(data){
+        // console.log(data)
+        console.log(start_date,stop_date,data)
+        console.log(localurls + "otherlists/" + start_date + "/" +stop_date)
+        attend_data(start_date,stop_date,data,today_data)
+      })
+
+    });
   }
 
   function reload(localurls){
@@ -389,7 +398,7 @@
       contentType:'application/json'
   }).done(function(data){
     if (data != "nothing"){
-    console.log(data)
+
     data.forEach((item, i) => {
       append_part = `<li style="border-bottom:1px rgba(148, 138, 149, 0.55); padding-top:5px;"> ・${item}</li>`
       $("#task_list").append(append_part)
@@ -413,7 +422,9 @@
 
 
 
-  function attend_data(start,stop,data){
+
+
+  function attend_data(start,stop,data,today_data){
       function formatDate(date) {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
@@ -429,7 +440,6 @@
     }
 
     data_attend = {}
-
     Lab = []
     Exp = []
     Home = []
@@ -441,11 +451,56 @@
     ex_data_attend["Out"] = 0
     start_date = new Date(start);
     stop_date = new Date(stop);
+    var today = moment()
+    var today_date = today.format("YYYY-MM-DD")
     days = ((stop_date - start_date)/(1000*3600*24))
     for (let i = 0; i < days+1; ++i){
       tomorrow = new Date(start)
       day = formatDate(tomorrow.setDate(start_date.getDate() + i))
-      console.log(ex_data_attend)
+      if (ex_data_attend["Lab"] > 24 || ex_data_attend["Exp"] > 24 || ex_data_attend["Home"] > 24 || ex_data_attend["Out"] > 24){
+        if(ex_data_attend["Lab"] > 24){
+          ex_data_attend["Lab"] -= 24
+          ex_data_attend["Exp"] = 0
+          ex_data_attend["Home"] = 0
+          ex_data_attend["Out"] = 0
+          data_attend["Lab"] = 24
+          data_attend["Exp"] = 0
+          data_attend["Home"] = 0
+          data_attend["Out"] = 0
+        }
+        else if(ex_data_attend["Exp"] > 24){
+          ex_data_attend["Lab"] = 0
+          ex_data_attend["Exp"] -= 24
+          ex_data_attend["Home"] = 0
+          ex_data_attend["Out"] = 0
+          data_attend["Exp"] = 24
+          data_attend["Lab"] = 0
+          data_attend["Home"] = 0
+          data_attend["Out"] = 0
+        }
+        else if(ex_data_attend["Home"] > 24){
+          ex_data_attend["Lab"] = 0
+          ex_data_attend["Exp"] = 0
+          ex_data_attend["Home"] -= 24
+          ex_data_attend["Out"] = 0
+          data_attend["Home"] = 24
+          data_attend["Exp"] = 0
+          data_attend["Lab"] = 0
+          data_attend["Out"] = 0
+        }
+        else if(ex_data_attend["Out"] > 24){
+          ex_data_attend["Lab"] = 0
+          ex_data_attend["Exp"] = 0
+          ex_data_attend["Home"] = 0
+          ex_data_attend["Out"] -= 24
+          data_attend["Out"] = 24
+          data_attend["Exp"] = 0
+          data_attend["Home"] = 0
+          data_attend["Lab"] = 0
+        }
+
+
+      }else{
       data_attend["Lab"] = ex_data_attend["Lab"]
       data_attend["Exp"] = ex_data_attend["Exp"]
       data_attend["Home"] = ex_data_attend["Home"]
@@ -481,11 +536,9 @@
               sum_munite = sum_munite + begin_munite + minute
             }
             sum_hour = sum_hour + begin_hour + hour;
-            console.log(sum_hour,sum_munite,sum_second)
 
             // 分裂
             if ( sum_hour >= 24 || (sum_hour == 24 && sum_munite > 0) || (sum_hour == 24 && sum_munite == 0 && sum_second > 0)){
-              console.log("pass")
               over_hour = sum_hour - 24;
               over_munite = sum_munite;
               over_second = sum_second;
@@ -507,13 +560,17 @@
           }
         }
       });
-      Lab.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Lab"].toFixed(2)])
-      Exp.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Exp"].toFixed(2)])
-      Home.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Home"].toFixed(2)])
-      Out.push([tomorrow.setDate(start_date.getDate() + i),data_attend["Out"].toFixed(2)])
-    }
-    console.log(Lab)
 
+    }
+    if (today_date == day){
+      data_attend[today_data['name']] += (today - moment(today_data["date"]))/(1000*60*60)
+    }
+    this_time = tomorrow.setDate(start_date.getDate() + i)
+      Lab.push([this_time,data_attend["Lab"].toFixed(1)])
+      Exp.push([this_time,data_attend["Exp"].toFixed(1)])
+      Home.push([this_time,data_attend["Home"].toFixed(1)])
+      Out.push([this_time,data_attend["Out"].toFixed(1)])
+    }
     function generateDayWiseTimeSeries(baseval, count, yrange) {
      var i = 0;
      var series = [];
@@ -529,16 +586,16 @@
     var options = {
       series: [
       {
+        name: 'Home',
+        data: Home
+      },
+      {
         name: 'Lab',
         data: Lab
       },
       {
         name: 'Exp',
         data: Exp
-      },
-      {
-        name: 'Home',
-        data: Home
       },
       {
         name: 'Out',
@@ -555,7 +612,7 @@
         }
       },
     },
-    colors: ['#008FFB', '#00E396', '#CED4DC', '#c0ff25'],
+    colors: [  '#CED4DC','#008FFB', '#00E396','#c0ff25'],
     dataLabels: {
       enabled: false
     },
@@ -565,7 +622,7 @@
     fill: {
       type: 'gradient',
       gradient: {
-        opacityFrom: 0.6,
+        opacityFrom: 0.8,
         opacityTo: 0.8,
       }
     },
@@ -575,6 +632,11 @@
     },
     xaxis: {
       type: 'datetime'
+    },
+    yaxis: {
+      type: 'datetime',
+      max: 24,
+      floating: false
     },
     };
 
