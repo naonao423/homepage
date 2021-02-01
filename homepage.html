@@ -456,7 +456,9 @@
     days = ((stop_date - start_date)/(1000*3600*24))
     for (let i = 0; i < days+1; ++i){
       tomorrow = new Date(start)
+      tomorrows = new Date(start)
       day = formatDate(tomorrow.setDate(start_date.getDate() + i))
+      console.log(day)
       if (ex_data_attend["Lab"] > 24 || ex_data_attend["Exp"] > 24 || ex_data_attend["Home"] > 24 || ex_data_attend["Out"] > 24){
         if(ex_data_attend["Lab"] > 24){
           ex_data_attend["Lab"] -= 24
@@ -562,15 +564,24 @@
       });
 
     }
+      this_time = tomorrows.setDate(start_date.getDate() + i)
+      console.log(formatDate(this_time))
     if (today_date == day){
       data_attend[today_data['name']] += (today - moment(today_data["date"]))/(1000*60*60)
+      console.log(this_time)
     }
-    this_time = tomorrow.setDate(start_date.getDate() + i)
+
+    if (data_attend["Lab"] == 0 && data_attend["Exp"] == 0 && data_attend["Home"] == 0 && data_attend["Out"] == 0){
+      console.log("pass")
+    }else{
       Lab.push([this_time,data_attend["Lab"].toFixed(1)])
       Exp.push([this_time,data_attend["Exp"].toFixed(1)])
       Home.push([this_time,data_attend["Home"].toFixed(1)])
       Out.push([this_time,data_attend["Out"].toFixed(1)])
     }
+
+  }
+    console.log(Lab)
     function generateDayWiseTimeSeries(baseval, count, yrange) {
      var i = 0;
      var series = [];
@@ -600,7 +611,7 @@
       {
         name: 'Out',
         data: Out
-      }
+      },
     ],
       chart: {
       type: 'area',
@@ -631,7 +642,18 @@
       horizontalAlign: 'left'
     },
     xaxis: {
-      type: 'datetime'
+      type: 'datetime',
+      labels: {
+        format: 'MM/dd(ddd)',
+        hideOverlappingLabels: false,
+        style: {
+          colors: [],
+          fontSize: '10px',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontWeight: 400,
+          cssClass: 'apexcharts-xaxis-label',
+        }
+      }
     },
     yaxis: {
       type: 'datetime',
@@ -642,7 +664,21 @@
 
     var chart = new ApexCharts(document.querySelector("#chart_attend"), options);
     chart.render();
+    $(".apexcharts-canvas").find("tspan[id^=SvgjsTspan]").each(function( index, element ) {
+      console.log($(this).text())
+      if ($(this).text().includes("Sun")){
+        var Id = $(this).attr('id').split("span")[1]
+        id_1 = parseInt(Id)-1
+        $("#"+"SvgjsText"+String(id_1)).css("fill","red")
+      }
+      if ($(this).text().includes("Sat")){
+        var Id = $(this).attr('id').split("span")[1]
+        id_1 = parseInt(Id)-1
+        $("#"+"SvgjsText"+String(id_1)).css("fill","blue")
+      }
+      })
   }
+
   </script>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
